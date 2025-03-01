@@ -60,7 +60,7 @@ describe("NumberInput Component", () => {
   test("selects entire text on focus", async () => {
     const { getByTestId } = render(
       <NumberInput value={10} onChange={() => {}} min={0} max={100} step={1} />
-    ) ;
+    );
 
     const input = getByTestId("number-input") as HTMLInputElement;
 
@@ -80,4 +80,11 @@ describe("NumberInput Component", () => {
     expect(input.setSelectionRange).toHaveBeenCalledWith(0, input.value.length);
   });
 
+  test("pressing Enter confirms and removes focus", () => {
+    const { input, onChange } = setup({ value: 10, min: 0, max: 100, step: 1 });
+    fireEvent.change(input, { target: { value: "50" } });
+    fireEvent.keyDown(input, { key: "Enter" });
+    expect(onChange).toHaveBeenCalledWith(50);
+    expect(document.activeElement).not.toBe(input);
+  });
 });
