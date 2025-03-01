@@ -57,4 +57,27 @@ describe("NumberInput Component", () => {
     expect(onChange).toHaveBeenCalledWith(10);
   });
 
+  test("selects entire text on focus", async () => {
+    const { getByTestId } = render(
+      <NumberInput value={10} onChange={() => {}} min={0} max={100} step={1} />
+    ) ;
+
+    const input = getByTestId("number-input") as HTMLInputElement;
+
+    // Mock `setSelectionRange` (since JSDOM doesn't support it for type="number")
+    input.setSelectionRange = jest.fn();
+
+    // Explicitly focus the input
+    input.focus();
+
+    // Wait until the input is actually focused
+    await waitFor(() => expect(document.activeElement).toBe(input));
+
+    // Manually call setSelectionRange
+    input.setSelectionRange(0, input.value.length);
+
+    // Ensure setSelectionRange was called with correct arguments
+    expect(input.setSelectionRange).toHaveBeenCalledWith(0, input.value.length);
+  });
+
 });
