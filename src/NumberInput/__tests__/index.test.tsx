@@ -87,4 +87,12 @@ describe("NumberInput Component", () => {
     expect(onChange).toHaveBeenCalledWith(50);
     expect(document.activeElement).not.toBe(input);
   });
+
+  test("pressing Escape reverts to original value and removes focus", () => {
+    const { input } = setup({ value: 10, min: 0, max: 100, step: 1 });
+    fireEvent.change(input, { target: { value: "50" } });
+    fireEvent.keyDown(input, { key: "Escape" });
+    expect(input.value).toBe(input.defaultValue || "10");
+    expect(document.activeElement).not.toBe(input);
+  });
 });
