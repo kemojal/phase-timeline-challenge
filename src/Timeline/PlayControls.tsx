@@ -1,4 +1,4 @@
-import  { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import NumberInput from "../NumberInput";
 
 type PlayControlsProps = {
@@ -11,8 +11,12 @@ export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
 
   // TODO: implement time <= maxTime
 
-  
-    const onTimeChange = useCallback(
+  // Ensure time does not exceed duration on mount
+  if (time > duration) {
+    setTime(duration);
+  }
+
+  const onTimeChange = useCallback(
     (newTime: number) => {
       // Ensure time is within bounds, multiple of 10, and positive
       const normalizedTime = Math.max(
@@ -24,10 +28,8 @@ export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
     [setTime, duration]
   );
 
-
-    const onDurationChange = useCallback(
+  const onDurationChange = useCallback(
     (newDuration: number) => {
-
       // Round the new duration value to the nearest multiple of 10
       const roundedDuration = Math.round(newDuration / 10) * 10;
       const normalizedDuration = Math.max(100, Math.min(6000, roundedDuration));
@@ -48,7 +50,6 @@ export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
     [time, setTime, setDuration]
   );
 
-
   return (
     <div
       className="flex justify-between items-center px-2 border-r border-b border-gray-700 border-solid"
@@ -56,24 +57,22 @@ export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
     >
       <fieldset className="flex gap-1">
         Current
-        
         <NumberInput
           value={time}
           onChange={onTimeChange}
           min={0}
-          max={2000}
+          max={duration}
           step={10}
           data-testid="current-time-input"
         />
       </fieldset>
       -
       <fieldset className="flex gap-1">
-       
         <NumberInput
-          value={2000}
+          value={duration}
           onChange={onDurationChange}
           min={100}
-          max={2000}
+          max={6000}
           step={10}
           data-testid="duration-input"
         />
