@@ -103,4 +103,11 @@ describe("NumberInput Component", () => {
     expect(onChange).toHaveBeenCalledWith(7);
   });
 
+  test("negative values are adjusted to min", () => {
+    const { input, onChange } = setup({ value: 10, min: 5, max: 100, step: 1 });
+    fireEvent.change(input, { target: { value: "-10" } });
+    fireEvent.blur(input);
+    expect(onChange).toHaveBeenCalledWith(5);
+  });
+
 });
