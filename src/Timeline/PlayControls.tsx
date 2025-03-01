@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import  { useCallback, useState } from "react";
 import NumberInput from "../NumberInput";
 
 type PlayControlsProps = {
@@ -7,22 +7,47 @@ type PlayControlsProps = {
 };
 
 export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
+  const [duration, setDuration] = useState(2000);
 
   // TODO: implement time <= maxTime
 
-  const onTimeChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTime(Number(e.target.value));
+  
+    const onTimeChange = useCallback(
+    (newTime: number) => {
+      // Ensure time is within bounds, multiple of 10, and positive
+      const normalizedTime = Math.max(
+        0,
+        Math.min(Math.round(newTime / 10) * 10, duration)
+      );
+      setTime(normalizedTime);
     },
-    [setTime]
+    [setTime, duration]
   );
 
-  const onDurationChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTime(Number(e.target.value));
+
+    const onDurationChange = useCallback(
+    (newDuration: number) => {
+
+      // Round the new duration value to the nearest multiple of 10
+      const roundedDuration = Math.round(newDuration / 10) * 10;
+      const normalizedDuration = Math.max(100, Math.min(6000, roundedDuration));
+
+      // If new duration is less than current time, update time first
+      if (normalizedDuration < time) {
+        setTime(normalizedDuration);
+      }
+
+      // Then update duration
+      setDuration(normalizedDuration);
+
+      // Also update current time to ensure it doesn't exceed new duration
+      if (time > normalizedDuration) {
+        setTime(normalizedDuration);
+      }
     },
-    [setTime]
+    [time, setTime, setDuration]
   );
+
 
   return (
     <div
