@@ -34,4 +34,11 @@ describe("NumberInput Component", () => {
     expect(input.value).toBe("25");
     expect(onChange).not.toHaveBeenCalled();
   });
+
+  test("onChange triggers when input loses focus", () => {
+    const { input, onChange } = setup({ value: 10, min: 0, max: 100, step: 1 });
+    fireEvent.change(input, { target: { value: "30" } });
+    fireEvent.blur(input);
+    expect(onChange).toHaveBeenCalledWith(30);
+  });
 });
