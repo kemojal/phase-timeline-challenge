@@ -116,4 +116,12 @@ describe("NumberInput Component", () => {
     fireEvent.blur(input);
     expect(onChange).toHaveBeenCalledWith(11);
   });
+
+  test("invalid inputs revert to previous valid value", () => {
+    const { input } = setup({ value: 10, min: 0, max: 100, step: 1 });
+    fireEvent.change(input, { target: { value: "abc" } });
+    fireEvent.blur(input);
+    expect(input.value).toBe("10");
+  });
+
 });
