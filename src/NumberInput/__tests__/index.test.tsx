@@ -49,4 +49,12 @@ describe("NumberInput Component", () => {
     expect(onChange).toHaveBeenCalledWith(15);
   });
 
+  test("pressing up/down arrows changes value and selects text", () => {
+    const { input, onChange } = setup({ value: 10, min: 0, max: 100, step: 5 });
+    fireEvent.keyDown(input, { key: "ArrowUp" });
+    expect(onChange).toHaveBeenCalledWith(15);
+    fireEvent.keyDown(input, { key: "ArrowDown" });
+    expect(onChange).toHaveBeenCalledWith(10);
+  });
+
 });
