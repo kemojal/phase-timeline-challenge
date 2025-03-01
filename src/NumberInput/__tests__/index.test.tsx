@@ -110,4 +110,10 @@ describe("NumberInput Component", () => {
     expect(onChange).toHaveBeenCalledWith(5);
   });
 
+  test("decimal values are rounded to nearest integer", () => {
+    const { input, onChange } = setup({ value: 10, min: 0, max: 100, step: 1 });
+    fireEvent.change(input, { target: { value: "10.7" } });
+    fireEvent.blur(input);
+    expect(onChange).toHaveBeenCalledWith(11);
+  });
 });
