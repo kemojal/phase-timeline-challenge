@@ -8,14 +8,14 @@ import {
     useEffect,
   } from "react";
   
-  interface NumberInputProps {
+  type NumberInputProps {
     value: number;
     onChange: (value: number) => void;
     min?: number;
     max?: number;
     step?: number;
     "data-testid"?: string;
-  }
+  };
   
   export const NumberInput = ({
     value,
