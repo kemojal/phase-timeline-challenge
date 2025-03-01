@@ -95,4 +95,12 @@ describe("NumberInput Component", () => {
     expect(input.value).toBe(input.defaultValue || "10");
     expect(document.activeElement).not.toBe(input);
   });
+
+  test("removes leading zeros", () => {
+    const { input, onChange } = setup({ value: 10, min: 0, max: 100, step: 1 });
+    fireEvent.change(input, { target: { value: "007" } });
+    fireEvent.blur(input);
+    expect(onChange).toHaveBeenCalledWith(7);
+  });
+
 });
