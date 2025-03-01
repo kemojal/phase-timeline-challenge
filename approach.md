@@ -6,3 +6,4 @@
 4. Write the requirements in the plan.md file and success criteria
 5. Created a .gitnore file to ignore the node_modules folder and other files that are not needed
 6. Write the approach in the approach.md file
+7. Initialized git and created a new branch `feature/number-input`
