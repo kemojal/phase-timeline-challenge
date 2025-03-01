@@ -41,4 +41,12 @@ describe("NumberInput Component", () => {
     fireEvent.blur(input);
     expect(onChange).toHaveBeenCalledWith(30);
   });
+  test("clicking step buttons changes value immediately", () => {
+    const { input, onChange } = setup({ value: 10, min: 0, max: 100, step: 5 });
+    fireEvent.change(input, { target: { value: "15" } });
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.blur(input);
+    expect(onChange).toHaveBeenCalledWith(15);
+  });
+
 });
