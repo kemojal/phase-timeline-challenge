@@ -1,6 +1,5 @@
 import {
   ChangeEvent,
-  FocusEvent,
   KeyboardEvent,
   useCallback,
   useEffect,
@@ -23,73 +22,62 @@ const NumberInput = ({
   min,
   max,
   step,
-  "data-testid": testId,
+  "data-testid": testId = "number-input",
 }: InputProps) => {
-  const [displayValue, setDisplayValue] = useState(value.toString());
-  const previousValue = useRef(value);
+  const [displayValue, setDisplayValue] = useState<string>(value.toString());
+  const [internalValue, setInternalValue] = useState<number>(value);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setDisplayValue(e.target.value);
+  // Update internal state when prop value changes
+  useEffect(() => {
+    setInternalValue(value);
+    setDisplayValue(value.toString());
+  }, [value]);
+
+  const validateAndFormatValue = (value: string): number => {
+    // Handle empty string
+    if (value === "") return internalValue;
+
+    // Remove leading zeros
+    const cleanValue = value.replace(/^0+(?=\d)/, "");
+
+    // Parse and validate number
+    let numValue = parseFloat(cleanValue);
+
+    // Handle non-numeric input - return the previous valid value
+    if (isNaN(numValue)) return internalValue;
+
+    // Round decimal values
+    numValue = Math.round(numValue);
+
+    // Handle negative values
+    if (numValue < min) return min;
+
+    // Handle max boundary
+    if (numValue > max) return max;
+
+    // Ensure step compliance
+    return Math.round(numValue / step) * step;
   };
 
-  // Handle confirmation events (blur and Enter key)
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setDisplayValue(newValue);
+  };
+
   const confirmValue = useCallback(() => {
-    if (!/^-?\d*\.?\d*$/.test(displayValue)) {
-      setDisplayValue(previousValue.current.toString());
-      return;
+    const validatedValue = validateAndFormatValue(displayValue);
+    setInternalValue(validatedValue);
+    setDisplayValue(validatedValue.toString());
+    if (validatedValue !== value) {
+      onChange(validatedValue);
     }
-
-    const numValue = Number(displayValue);
-    if (!isNaN(numValue)) {
-      const roundedValue = Math.round(numValue);
-      const boundedValue = Math.max(min, Math.min(max, roundedValue));
-      const finalValue = step
-        ? Math.round(boundedValue / step) * step
-        : boundedValue;
-
-      if (finalValue !== previousValue.current) {
-        onChange(finalValue);
-      }
-      setDisplayValue(finalValue.toString());
-      previousValue.current = finalValue;
-    } else {
-      setDisplayValue(previousValue.current.toString());
-    }
-  }, [displayValue, min, max, step, onChange]);
-
-  useEffect(() => {
-    const boundedValue = Math.max(min, Math.min(max, value));
-    setDisplayValue(boundedValue.toString());
-    previousValue.current = boundedValue;
-  }, [value, min, max]);
+  }, [displayValue, value, onChange, min, max, step, internalValue]);
 
   const handleBlur = () => {
     confirmValue();
   };
 
-  const handleStep = useCallback(
-    (increment: boolean) => {
-      const currentValue = previousValue.current;
-      const delta = increment ? step : -step;
-      const steppedValue = currentValue + delta;
-      const boundedValue = Math.max(min, Math.min(max, steppedValue));
-
-      setDisplayValue(boundedValue.toString());
-      onChange(boundedValue);
-      previousValue.current = boundedValue;
-
-      setTimeout(() => {
-        if (inputRef.current) {
-          inputRef.current.select();
-          inputRef.current.setAttribute("data-selected", "true");
-        }
-      }, 0);
-    },
-    [step, min, max, onChange]
-  );
-
-  // Handle keyboard events
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     switch (e.key) {
       case "Enter":
@@ -98,46 +86,63 @@ const NumberInput = ({
         break;
       case "Escape":
         setDisplayValue(value.toString());
+        setInternalValue(value);
         inputRef.current?.blur();
         break;
       case "ArrowUp":
         e.preventDefault();
-        handleStep(true);
+        const incrementedValue = Math.min(internalValue + step, max);
+        setInternalValue(incrementedValue);
+        setDisplayValue(incrementedValue.toString());
+        onChange(incrementedValue);
+        selectText();
         break;
       case "ArrowDown":
         e.preventDefault();
-        handleStep(false);
+        const decrementedValue = Math.max(internalValue - step, min);
+        setInternalValue(decrementedValue);
+        setDisplayValue(decrementedValue.toString());
+        onChange(decrementedValue);
+        selectText();
         break;
     }
   };
 
-  const handleFocus = (_e: FocusEvent<HTMLInputElement>) => {
-    setTimeout(() => {
-      if (inputRef.current) {
-        inputRef.current.select();
-        inputRef.current.setAttribute("data-selected", "true");
-      }
-    }, 0);
+  const selectText = useCallback(() => {
+    if (inputRef.current) {
+      // Do it immediately and also in a requestAnimationFrame for cross-browser reliability
+      inputRef.current.select();
+      requestAnimationFrame(() => {
+        if (inputRef.current) {
+          inputRef.current.select();
+        }
+      });
+    }
+  }, []);
+
+  const handleFocus = () => {
+    selectText();
   };
 
-  const handleStepClick = useCallback(() => {
-    setTimeout(() => inputRef.current?.select(), 0);
-  }, []);
+  const handleStepperClick = () => {
+    selectText();
+  };
 
   return (
     <input
+      ref={inputRef}
       className="px-1 bg-gray-700 rounded"
       type="number"
-      data-testid={testId}
-      min={min}
-      max={max}
-      step={step}
       value={displayValue}
-      onChange={handleOnChange}
+      onChange={handleChange}
       onBlur={handleBlur}
       onKeyDown={handleKeyDown}
       onFocus={handleFocus}
-      onClick={handleStepClick}
+      onClick={handleStepperClick}
+      min={min}
+      max={max}
+      step={step}
+      data-testid={testId}
     />
   );
 };

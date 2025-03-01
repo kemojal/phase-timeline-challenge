@@ -8,4 +8,5 @@
 6. Write the approach in the approach.md file
 7. Initialized git and created a new branch `feature/number-input`
 8. Refactor input component to use NumberInput component
-9. 
+9. ```yarn global add update-browserslist-db
+yarn update-browserslist-db``` to fix the browserslist warning
