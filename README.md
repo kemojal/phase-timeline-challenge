@@ -1,23 +1,58 @@
 # Phase Timeline Challenge Submission
 
-<!-- ## Overview -->
+## Getting Started
 
-<!-- Implement interactive features for a Timeline component. We will provide a basic Timeline component scaffold, and your task is to implement the functionality that meets the user behavior requirements outlined below.
+### Prerequisites
 
-![component-overview](./readme-assets/component-overview.jpg)
+- Node.js (v14 or higher)
+- npm or yarn
 
-## Glossary
+### Installation
 
-- **Timeline**: The main component that visually represents the duration of a sequence of events or changes over time.
-- **Playhead**: The visual indicator that shows the current time position on the Timeline.
-- **Current Time**: The specific time point indicated by the Playhead's position.
-- **Duration**: The total length of time represented by the Timeline.
-- **Ruler**: The component showing time measurements and increments along the Timeline.
-- **Track**: A horizontal lane on the Timeline that can contain multiple Keyframes, often used to group related events or changes.
-- **Track List**: The component that displays and manages multiple Tracks.
-- **Keyframe**: A marked point on the Timeline representing a significant event, change, or state.
-- **Keyframe List**: The component that shows the Keyframes across all Tracks, synchronized with the Ruler.
-- **Segment**: The visual representation of the Timeline's duration in the Keyframe List. -->
+1. Clone the repository
+
+```bash
+git clone https://github.com/kemojal/phase-timeline-challenge.git
+cd phase-timeline-challenge
+```
+
+2. Install dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### Running the Project
+
+To start the development server:
+
+```bash
+npm start
+# or
+yarn start
+```
+
+The application will be available at `http://localhost:3000`
+
+### Running Tests
+
+To run all tests:
+
+```bash
+npm test
+# or
+yarn test
+```
+
+To run tests with coverage:
+
+```bash
+npm test -- --coverage
+# or
+yarn test --coverage
+```
 
 ## Tests files and folders
 
