@@ -6,14 +6,16 @@
 
 ### 1.1 Setup Global State Management
 
-- [ ] Create new branch `feature/state-management`
-- [ ] Install and configure Redux Toolkit
-- [ ] Create timeline state slice
-  - [ ] Define state interfaces
-  - [ ] Implement time/duration reducers
-  - [ ] Implement scroll position reducers
-- [ ] Create store configuration
-- [ ] Add provider to app root
+- [x] Create new branch `feature/state-management`
+- [x] Install and configure Zustand
+- [x] Create timeline store
+- [x] Define store state
+- [x] Replace Timeline component state with Zustand store
+- [x] Replace PlayControl component state with Zustand store
+- [x] Replace Ruler component state with Zustand store
+- [x] Replace Playhead component state with Zustand store
+- [x] Replace KeyframeList component state with Zustand store
+- [x] Replace TrackList component state with Zustand store
 
 ### 1.2 Custom Hooks Implementation
 
