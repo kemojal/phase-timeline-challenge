@@ -14,39 +14,33 @@ export const Timeline = () => {
 
   // Synchronize horizontal scrolling between Ruler and KeyframeList
   useEffect(() => {
-    const syncHorizontalScroll = (
-      sourceRef: React.RefObject<HTMLDivElement>,
-      targetRef: React.RefObject<HTMLDivElement>
-    ) => {
-      const handleScroll = (e: Event) => {
-        if (
-          sourceRef.current &&
-          targetRef.current &&
-          e.target === sourceRef.current
-        ) {
-          targetRef.current.scrollLeft = sourceRef.current.scrollLeft;
-        }
-      };
+    const handleScroll = (event: Event) => {
+      const source = event.target as HTMLElement;
+      const ruler = rulerRef.current;
+      const keyframeList = keyframeListRef.current;
 
-      sourceRef.current?.addEventListener("scroll", handleScroll);
+      if (!ruler || !keyframeList) return;
 
-      return () => {
-        sourceRef.current?.removeEventListener("scroll", handleScroll);
-      };
+      if (source === ruler) {
+        keyframeList.scrollLeft = ruler.scrollLeft;
+      } else if (source === keyframeList) {
+        ruler.scrollLeft = keyframeList.scrollLeft;
+      }
     };
 
-    const cleanupRulerToKeyframe = syncHorizontalScroll(
-      rulerRef,
-      keyframeListRef
-    );
-    const cleanupKeyframeToRuler = syncHorizontalScroll(
-      keyframeListRef,
-      rulerRef
-    );
+    const ruler = rulerRef.current;
+    const keyframeList = keyframeListRef.current;
+
+    if (ruler && keyframeList) {
+      ruler.addEventListener("scroll", handleScroll);
+      keyframeList.addEventListener("scroll", handleScroll);
+    }
 
     return () => {
-      cleanupRulerToKeyframe();
-      cleanupKeyframeToRuler();
+      if (ruler && keyframeList) {
+        ruler.removeEventListener("scroll", handleScroll);
+        keyframeList.removeEventListener("scroll", handleScroll);
+      }
     };
   }, []);
 
