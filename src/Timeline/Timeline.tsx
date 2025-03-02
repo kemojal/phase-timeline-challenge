@@ -24,6 +24,10 @@ export const Timeline = () => {
 
       if (!ruler || !keyframeList) return;
 
+      let newTime = Math.round(source.scrollLeft);  // Convert scroll to time
+
+      setTime(newTime); // Update playhead position
+
       if (source === ruler) {
         keyframeList.scrollLeft = ruler.scrollLeft;
       } else if (source === keyframeList) {
