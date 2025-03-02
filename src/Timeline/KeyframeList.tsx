@@ -5,16 +5,36 @@ interface KeyframeListProps {
   duration: number;
   keyframeListRef: RefObject<HTMLDivElement>;
   rulerRef: RefObject<HTMLDivElement>;
+  trackListRef: RefObject<HTMLDivElement>;
 }
 
 export const KeyframeList = ({
   duration,
   keyframeListRef,
   rulerRef,
+  trackListRef,
 }: KeyframeListProps) => {
-  // TODO: implement scroll sync with `Ruler` and `TrackList`
+  // Sync vertical scrolling with `TrackList`
+  useEffect(() => {
+    const syncVerticalScroll = (e: Event) => {
+      if (trackListRef.current && e.target === keyframeListRef.current) {
+        trackListRef.current.scrollTop = (e.target as HTMLElement).scrollTop;
+      }
+    };
 
-  // Sync horizontal scrolling with Ruler
+    const keyframeList = keyframeListRef.current;
+    if (keyframeList) {
+      keyframeList.addEventListener("scroll", syncVerticalScroll);
+    }
+
+    return () => {
+      if (keyframeList) {
+        keyframeList.removeEventListener("scroll", syncVerticalScroll);
+      }
+    };
+  }, [keyframeListRef, trackListRef]);
+
+  // Sync horizontal scrolling with `Ruler`
   useEffect(() => {
     const syncHorizontalScroll = () => {
       if (rulerRef.current && keyframeListRef.current) {
@@ -31,7 +51,6 @@ export const KeyframeList = ({
       );
     };
   }, [keyframeListRef, rulerRef]);
-  
 
   return (
     <div

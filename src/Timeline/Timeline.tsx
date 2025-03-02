@@ -11,6 +11,7 @@ export const Timeline = () => {
   const [duration, setDuration] = useState(1000);
   const rulerRef = useRef<HTMLDivElement | null>(null);
   const keyframeListRef = useRef<HTMLDivElement>(null);
+  const trackListRef = useRef<HTMLDivElement>(null);
 
   // Synchronize horizontal scrolling between Ruler and KeyframeList
   useEffect(() => {
@@ -62,11 +63,15 @@ export const Timeline = () => {
         duration={duration}
         rulerRef={rulerRef}
       />
-      <TrackList />
+      <TrackList
+        trackListRef={trackListRef}
+        keyframeListRef={keyframeListRef}
+      />
       <KeyframeList
         duration={duration}
         keyframeListRef={keyframeListRef}
         rulerRef={rulerRef}
+        trackListRef={trackListRef} 
       />
       <Playhead time={time} />
     </div>
