@@ -1,17 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Playhead } from "./Playhead";
 import { Ruler } from "./Ruler";
 import { TrackList } from "./TrackList";
 import { KeyframeList } from "./KeyframeList";
 import { PlayControls } from "./PlayControls";
+import { useTimelineStore } from "../stores/timelineStore";
 
 export const Timeline = () => {
-  // FIXME: performance concerned
-
-  // TODO: optimize the props and scroll syncing logic
-  const [time, setTime] = useState(0);
-  const [duration, setDuration] = useState(1000);
-  const [scrollLeft, setScrollLeft] = useState(0)
+  const { time, duration, scrollLeft, setScrollLeft } =
+    useTimelineStore();
 
   const rulerRef = useRef<HTMLDivElement | null>(null);
   const keyframeListRef = useRef<HTMLDivElement>(null);
@@ -26,9 +23,8 @@ export const Timeline = () => {
 
       if (!ruler || !keyframeList) return;
 
-
       const newScrollLeft = source.scrollLeft;
-      setScrollLeft(newScrollLeft); // Update state to track horizontal scroll
+      setScrollLeft(newScrollLeft); // Update store instead of local state
 
       if (source === ruler) {
         keyframeList.scrollLeft = ruler.scrollLeft;
@@ -51,7 +47,7 @@ export const Timeline = () => {
         keyframeList.removeEventListener("scroll", handleScroll);
       }
     };
-  }, []);
+  }, [setScrollLeft]);
 
   return (
     <div
@@ -59,16 +55,9 @@ export const Timeline = () => {
     bg-gray-800 border-t-2 border-solid border-gray-700"
       data-testid="timeline"
     >
-      <PlayControls
-        time={time}
-        setTime={setTime}
-        duration={duration}
-        setDuration={setDuration}
-      />
+      <PlayControls />
       <Ruler
-        time={time}
-        setTime={setTime}
-        duration={duration}
+       
         rulerRef={rulerRef}
       />
       <TrackList
@@ -81,10 +70,7 @@ export const Timeline = () => {
         rulerRef={rulerRef}
         trackListRef={trackListRef}
       />
-      <Playhead time={time}
-      scrollLeft={scrollLeft}
-      duration={duration}
-       />
+      <Playhead time={time} scrollLeft={scrollLeft} duration={duration} />
     </div>
   );
 };

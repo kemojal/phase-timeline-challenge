@@ -1,13 +1,12 @@
 import { MouseEvent, RefObject } from "react";
+import { useTimelineStore } from "../stores/timelineStore";
 
 interface RulerProps {
-  time?: number;
-  setTime: (time: number) => void;
-  duration: number;
   rulerRef: RefObject<HTMLDivElement>;
 }
 
-export const Ruler = ({ setTime, duration, rulerRef }: RulerProps) => {
+export const Ruler = ({ rulerRef }: RulerProps) => {
+  const { setTime, duration } = useTimelineStore();
   let padding = 16;
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {

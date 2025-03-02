@@ -1,14 +1,10 @@
 import { useCallback } from "react";
 import NumberInput from "../NumberInput";
+import { useTimelineStore } from "../stores/timelineStore";
 
-type PlayControlsProps = {
-  time: number;
-  setTime: (time: number) => void;
-  duration: number;
-  setDuration: (duration: number) => void;
-};
+export const PlayControls = () => {
+  const { time, setTime, duration, setDuration } = useTimelineStore();
 
-export const PlayControls = ({ time, setTime, duration, setDuration }: PlayControlsProps) => {
   // Ensure time does not exceed duration on mount
   if (time > duration) {
     setTime(duration);
@@ -41,7 +37,7 @@ export const PlayControls = ({ time, setTime, duration, setDuration }: PlayContr
         setTime(normalizedDuration);
       }
     },
-    [time, setTime, duration]
+    [time, setTime, setDuration]
   );
 
   const handleKeyDown = useCallback(
