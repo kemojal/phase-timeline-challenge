@@ -78,6 +78,7 @@ yarn test --coverage
 - TailwindCSS
 - Jest & React Testing Library
 - Vite (Build tool)
+- Zustand (State management)
 
 ## Project Structure
 
