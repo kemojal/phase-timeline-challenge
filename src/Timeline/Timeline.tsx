@@ -89,6 +89,7 @@ export const Timeline = () => {
       />
       <Playhead time={time}
       scrollLeft={scrollLeft}
+      duration={duration}
        />
     </div>
   );
