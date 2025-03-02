@@ -19,11 +19,11 @@
 
 ### 1.2 Custom Hooks Implementation
 
-- [ ] Create `hooks` directory
-- [ ] Implement `useSyncScroll` hook
-  - [ ] Extract scroll logic from Timeline
-  - [ ] Add proper TypeScript types
-  - [ ] Write tests
+- [x] Create `hooks` directory
+- [x] Implement `useSyncScroll` hook
+  - [x] Extract scroll logic from Timeline
+  - [x] Add proper TypeScript types
+  - [x] Write tests
 - [ ] Implement `useTimeControl` hook
   - [ ] Extract time/duration logic
   - [ ] Add validation and constraints
