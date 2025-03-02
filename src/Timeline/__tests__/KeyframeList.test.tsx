@@ -54,4 +54,15 @@ describe("KeyframeList Component", () => {
     expect(trackListScrollTop).toBe(100);
   });
 
+  test("Horizontal scrolling syncs with Ruler", () => {
+    const keyframeList = screen.getByTestId("keyframe-list");
+    const ruler = screen.getByTestId("ruler");
+
+    fireEvent.scroll(keyframeList, { target: { scrollLeft: 200 } });
+
+    expect(ruler.scrollLeft).toBe(200);
+  });
+
+  
+
 });
