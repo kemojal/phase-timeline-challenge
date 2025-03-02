@@ -1,19 +1,22 @@
 import { RefObject, useEffect } from "react";
 import { Segment } from "./Segment";
+import { useTimelineStore } from "../stores/timelineStore";
 
 interface KeyframeListProps {
-  duration: number;
   keyframeListRef: RefObject<HTMLDivElement>;
   rulerRef: RefObject<HTMLDivElement>;
   trackListRef: RefObject<HTMLDivElement>;
 }
 
 export const KeyframeList = ({
-  duration,
   keyframeListRef,
   rulerRef,
   trackListRef,
 }: KeyframeListProps) => {
+
+
+  const { duration } = useTimelineStore();
+  
   // Sync vertical scrolling with `TrackList`
   useEffect(() => {
     const syncVerticalScroll = (e: Event) => {

@@ -7,8 +7,7 @@ import { PlayControls } from "./PlayControls";
 import { useTimelineStore } from "../stores/timelineStore";
 
 export const Timeline = () => {
-  const { time, duration, scrollLeft, setScrollLeft } =
-    useTimelineStore();
+  const { setScrollLeft } = useTimelineStore();
 
   const rulerRef = useRef<HTMLDivElement | null>(null);
   const keyframeListRef = useRef<HTMLDivElement>(null);
@@ -56,21 +55,17 @@ export const Timeline = () => {
       data-testid="timeline"
     >
       <PlayControls />
-      <Ruler
-       
-        rulerRef={rulerRef}
-      />
+      <Ruler rulerRef={rulerRef} />
       <TrackList
         trackListRef={trackListRef}
         keyframeListRef={keyframeListRef}
       />
       <KeyframeList
-        duration={duration}
         keyframeListRef={keyframeListRef}
         rulerRef={rulerRef}
         trackListRef={trackListRef}
       />
-      <Playhead time={time} scrollLeft={scrollLeft} duration={duration} />
+      <Playhead />
     </div>
   );
 };

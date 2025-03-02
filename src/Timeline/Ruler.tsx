@@ -32,9 +32,6 @@ export const Ruler = ({ rulerRef }: RulerProps) => {
 
     setTime(newTime);
   };
-
-  // TODO: implement mousedown and mousemove to update time and Playhead position
-
   return (
     <div
       ref={rulerRef}

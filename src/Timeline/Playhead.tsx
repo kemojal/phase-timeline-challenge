@@ -1,10 +1,10 @@
-type PlayheadProps = {
-  time: number;
-  scrollLeft: number;
-  duration: number;
-};
+import { useTimelineStore } from "../stores/timelineStore";
 
-export const Playhead = ({ time, scrollLeft, duration }: PlayheadProps) => {
+
+
+export const Playhead = () => {
+
+  const { time, duration, scrollLeft } = useTimelineStore();
   const timelineWidth = duration; // Assuming the timeline width is equal to the duration
   const playheadPosition = time - scrollLeft;
   const isVisible = playheadPosition >= 0 && playheadPosition <= timelineWidth;
