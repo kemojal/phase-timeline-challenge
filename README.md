@@ -58,10 +58,8 @@ yarn test --coverage
 
 - `src/NumberInput/__tests__/index.test.tsx` - Tests for the Number Input component
 - `src/Timeline/__tests__/PlayControls.test.tsx` - Tests for the PlayControls component
-- `src/Timeline/__tests__/Ruler.test.tsx` - Tests for the
-  Ruler component
-- `src/Timeline/__tests__/TrackList.test.tsx` - Tests for the
-- Track List component
+- `src/Timeline/__tests__/Ruler.test.tsx` - Tests for the Ruler component
+- `src/Timeline/__tests__/TrackList.test.tsx` - Tests for the Track List component
 - `src/Timeline/__tests__/KeyframeList.test.tsx` - Tests for the Keyframe List component
 - `src/Timeline/__tests__/Playhead.test.tsx` - Tests for the Playhead component component
 
@@ -72,6 +70,79 @@ yarn test --coverage
 | ![Number Input](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/01-number-input.png?raw=true) |  ![Play Controls](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/02-playcontrol.png?raw=true)   |            ![Ruler](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/03-ruler.png?raw=true)             |
 |   ![Track List](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/04-tracklist.png?raw=true)    | ![Keyframe List](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/05-1-keyframelist.png?raw=true) | ![Keyframe Segment](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/05-1-keyframesegment.png?raw=true) |
 |     ![Playhead](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/06-playhead.png?raw=true)     |                                                                                                                                         |                                                                                                                                               |
+
+## Technology Stack
+
+- React
+- TypeScript
+- TailwindCSS
+- Jest & React Testing Library
+- Vite (Build tool)
+
+## Project Structure
+
+```
+src/
+├── App.tsx                # Main application component
+├── NumberInput/          # Number input component and tests
+├── Timeline/             # Timeline related components
+│   ├── Timeline.tsx      # Main timeline component
+│   ├── PlayControls.tsx  # Playback control component
+│   ├── Playhead.tsx      # Current time indicator
+│   ├── Ruler.tsx        # Time measurement display
+│   ├── KeyframeList.tsx  # Keyframe management
+│   ├── TrackList.tsx    # Track management
+│   ├── Segment.tsx      # Timeline segment component
+│   └── __tests__/       # Component test files
+└── index.tsx            # Application entry point
+```
+
+## Component Overview
+
+### Main Components
+
+1. **Timeline (`Timeline.tsx`)**
+
+   - Core component that integrates all timeline functionalities
+   - Manages the overall timeline state and interactions
+
+2. **PlayControls (`PlayControls.tsx`)**
+
+   - Handles timeline playback controls
+   - Manages current time and duration settings
+
+3. **Ruler (`Ruler.tsx`)**
+
+   - Displays time measurements and increments
+   - Provides visual time reference
+
+4. **TrackList (`TrackList.tsx`)**
+
+   - Manages multiple tracks
+   - Handles track synchronization
+
+5. **KeyframeList (`KeyframeList.tsx`)**
+
+   - Manages keyframe display and interactions
+   - Synchronizes with other timeline components
+
+6. **Playhead (`Playhead.tsx`)**
+
+   - Visual indicator for current time position
+   - Handles time position updates
+
+7. **NumberInput (`NumberInput/`)**
+   - Reusable numeric input component
+   - Handles value constraints and validation
+
+### Key Features
+
+- Interactive timeline navigation
+- Synchronized scrolling between components
+- Precise time control and playback
+- Multi-track support
+- Keyframe management
+- Responsive design
 
 ## User Behavior Requirements
 
