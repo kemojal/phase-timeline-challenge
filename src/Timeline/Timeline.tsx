@@ -30,12 +30,6 @@ export const Timeline = () => {
       const newScrollLeft = source.scrollLeft;
       setScrollLeft(newScrollLeft); // Update state to track horizontal scroll
 
-
-
-      // let newTime = Math.round(source.scrollLeft);  // Convert scroll to time
-
-      // setTime(newTime); // Update playhead position
-
       if (source === ruler) {
         keyframeList.scrollLeft = ruler.scrollLeft;
       } else if (source === keyframeList) {
