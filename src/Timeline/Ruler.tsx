@@ -56,12 +56,12 @@ const DurationKnob = ({
 
   return (
     <div
-      className="group absolute -top-3 -right-1.5 z-50 flex h-8 w-3 cursor-ew-resize flex-col items-center justify-center gap-[2px] rounded bg-gray-800/80 shadow-lg backdrop-blur-sm transition-all hover:bg-gray-700/80 active:bg-gray-600/80 touch-none"
+      className="group absolute -top-1 -right-1.5 z-50 flex h-8 w-1 cursor-ew-resize flex-col items-center justify-center gap-[2px] rounded-xs bg-[#272525]/80 shadow-lg backdrop-blur-sm transition-all hover:bg-[#272525]/80 active:bg-[#272525]/80 touch-none"
       onMouseDown={handleMouseDown}
       data-testid="duration-knob"
     >
       {/* Duration tooltip */}
-      <div className="absolute -top-5 px-1.5 py-0.5 text-[10px] text-white rounded shadow-xl opacity-0 transition-opacity bg-gray-900/90 group-hover:opacity-100 whitespace-nowrap">
+      <div className="absolute -top-5 px-1 py-0.5 text-[10px] text-white rounded shadow-xl opacity-0 transition-opacity bg-gray-900/90 group-hover:opacity-100 whitespace-nowrap">
         {(duration / 1000).toFixed(1)}s
       </div>
 
@@ -155,7 +155,10 @@ export const Ruler = ({ rulerRef }: RulerProps) => {
         data-testid="ruler-bar"
         className="relative h-6 rounded-md bg-white/10"
       >
-        {renderMarkers()}
+        <div className="flex relative items-center w-full h-full">
+          {renderMarkers()}
+        </div>
+
         <DurationKnob
           duration={duration}
           onDurationChange={setDuration}
