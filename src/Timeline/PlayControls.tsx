@@ -1,14 +1,14 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import NumberInput from "../NumberInput";
 
 type PlayControlsProps = {
   time: number;
   setTime: (time: number) => void;
+  duration: number;
+  setDuration: (duration: number) => void;
 };
 
-export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
-  const [duration, setDuration] = useState(2000);
-
+export const PlayControls = ({ time, setTime, duration, setDuration }: PlayControlsProps) => {
   // Ensure time does not exceed duration on mount
   if (time > duration) {
     setTime(duration);

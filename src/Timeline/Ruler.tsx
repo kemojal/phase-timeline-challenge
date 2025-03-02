@@ -1,13 +1,17 @@
-import { MouseEvent, useRef } from "react";
+import { MouseEvent, RefObject, useRef } from "react";
 
 interface RulerProps {
   time?: number;
   setTime: (time: number) => void;
+  scrollRef: RefObject<HTMLDivElement>;
+  duration: number;
 }
 
 export const Ruler = ({
   //  time,
   setTime,
+  // scrollRef,
+  duration,
 }: RulerProps) => {
   const rulerRef = useRef<HTMLDivElement | null>(null);
   let padding = 16;
@@ -35,6 +39,44 @@ export const Ruler = ({
 
     setTime(newTime);
   };
+
+  // Sync scroll with Keyframe List
+  // Sync scroll with KeyframeList
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    // Find the keyframe list element
+    const keyframeList = document.querySelector(
+      '[data-testid="keyframe-list"]'
+    );
+    if (keyframeList && keyframeList instanceof HTMLElement) {
+      // Sync scroll position
+      keyframeList.scrollLeft = e.currentTarget.scrollLeft;
+    }
+  };
+
+  // Generate time markers
+  const renderTimeMarkers = () => {
+    const markers = [];
+    const markerInterval = 100; // Every 100ms
+
+    for (let i = 0; i <= duration; i += markerInterval) {
+      markers.push(
+        <div
+          key={i}
+          className="absolute w-px h-3 bg-gray-400"
+          style={{ left: `${i}px` }}
+        >
+          {/* {i % 500 === 0 && (
+            <div className="absolute -top-4 text-xs text-gray-300 -translate-x-1/2">
+              {i}ms
+            </div>
+          )} */}
+        </div>
+      );
+    }
+
+    return markers;
+  };
+
   // TODO: implement mousedown and mousemove to update time and Playhead position
 
   return (
@@ -44,11 +86,17 @@ export const Ruler = ({
       data-testid="ruler"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
+      onScroll={handleScroll}
     >
       <div
-        className="w-[2000px] h-6 rounded-md bg-white/25"
+        style={{ width: `${duration}px` }}
         data-testid="ruler-bar"
-      ></div>
+        className="flex relative flex-col gap-1 rounded-md"
+      >
+        <div className="w-full h-2 rounded-md bg-white/25"/>
+
+        <div>{renderTimeMarkers()}</div>
+      </div>
     </div>
   );
 };
