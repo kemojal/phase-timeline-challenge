@@ -63,6 +63,13 @@ describe("KeyframeList Component", () => {
     expect(ruler.scrollLeft).toBe(200);
   });
 
+  test("Segment length visually represents the total duration", () => {
+    const segments = screen.getAllByTestId("segment");
+    segments.forEach((segment) => {
+      expect(segment.firstChild).toHaveStyle(`width: 1000px`);
+    });
+  });
+
   
 
 });
