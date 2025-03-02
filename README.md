@@ -21,18 +21,31 @@
 
 ## Tests files and folders
 
-
 - `src/NumberInput/__tests__/index.test.tsx` - Tests for the Number Input component
 - `src/Timeline/__tests__/PlayControls.test.tsx` - Tests for the PlayControls component
-- `src/Timeline/__tests__/Ruler.test.tsx` - Tests for the 
+- `src/Timeline/__tests__/Ruler.test.tsx` - Tests for the
   Ruler component
-- `src/Timeline/__tests__/TrackList.test.tsx` - Tests for the 
+- `src/Timeline/__tests__/TrackList.test.tsx` - Tests for the
 - Track List component
 - `src/Timeline/__tests__/KeyframeList.test.tsx` - Tests for the Keyframe List component
 - `src/Timeline/__tests__/Playhead.test.tsx` - Tests for the Playhead component component
 
-
-
+<table>
+  <tr>
+    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/01-number-input.png?raw=true" width="100"></td>
+    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/02-playcontrol.png?raw=true" width="100"></td>
+    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/03-ruler.png?raw=true" width="100"></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/04-tracklist.png?raw=true" width="100"></td>
+    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/05-1-keyframelist.png?raw=true" width="100"></td>
+    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/05-1-keyframesegment.png?raw=true" width="100"></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/06-playhead.png?raw=true" width="100"></td>
+    
+  </tr>
+</table>
 
 ## User Behavior Requirements
 
@@ -118,9 +131,7 @@ Interface
 | `trackListRef` | `RefObject<HTMLDivElement>` | Ref for scroll synchronization |
 | `keyframeListRef` | `RefObject<HTMLDivElement>` | Ref for scroll synchronization with Keyframe List |
 
-
 ![Track List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/04-track-list-test.gif?raw=true)
-
 
 Behavior test
 
@@ -155,8 +166,6 @@ Interface
 | `duration` | `number` | Total duration in milliseconds |
 
 ![Playhead Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/06-playhead-test.gif?raw=true)
-
-
 
 Behavior test
 
