@@ -50,4 +50,18 @@ describe("PlayControls Component", () => {
     fireEvent.blur(durationInput);
     expect(setTime).toHaveBeenCalledWith(100);
   });
+  test("Current Time and Duration round to nearest multiple of 10ms", () => {
+    const durationInput = screen.getByTestId("duration-input");
+    const currentTimeInput = screen.getByTestId("current-time-input");
+
+    fireEvent.change(durationInput, { target: { value: "5983" } });
+    fireEvent.blur(durationInput);
+    expect(setTime).toHaveBeenCalledWith(5980); // Should round to nearest 10
+
+    setTime.mockClear();
+
+    fireEvent.change(currentTimeInput, { target: { value: "999" } });
+    fireEvent.blur(currentTimeInput);
+    expect(setTime).toHaveBeenCalledWith(1000); // Should round to 1000ms
+  });
 });
