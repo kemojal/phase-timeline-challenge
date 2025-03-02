@@ -1,17 +1,10 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef } from "react";
 
 interface ScrollSyncOptions {
   /** Enable vertical scroll synchronization */
   vertical?: boolean;
   /** Enable horizontal scroll synchronization */
   horizontal?: boolean;
-  /** Debounce time in milliseconds */
-  debounceTime?: number;
-}
-
-interface ScrollPosition {
-  scrollTop: number;
-  scrollLeft: number;
 }
 
 /**
@@ -25,16 +18,8 @@ export function useScrollSync(
   targetRef: RefObject<HTMLElement>,
   options: ScrollSyncOptions = {}
 ): void {
-  const {
-    vertical = true,
-    horizontal = true,
-    debounceTime = 0
-  } = options;
-
-  // Use a ref to track if we're currently handling a scroll event
-  // This prevents infinite scroll loops between elements
+  const { vertical = true, horizontal = true } = options;
   const isScrolling = useRef(false);
-  const timeoutRef = useRef<number>();
 
   useEffect(() => {
     const source = sourceRef.current;
@@ -44,75 +29,36 @@ export function useScrollSync(
       return;
     }
 
-    const handleScroll = (event: Event) => {
-      // Prevent infinite scroll loop
-      if (isScrolling.current) {
-        return;
+    let timeoutId: number;
+
+    const handleScroll = () => {
+      if (isScrolling.current) return;
+
+      isScrolling.current = true;
+
+      if (vertical) {
+        target.scrollTop = source.scrollTop;
+      }
+      if (horizontal) {
+        target.scrollLeft = source.scrollLeft;
       }
 
-      const syncScroll = () => {
-        if (!source || !target) return;
-
-        isScrolling.current = true;
-
-        // Only sync the enabled scroll directions
-        if (vertical) {
-          target.scrollTop = source.scrollTop;
-        }
-        if (horizontal) {
-          target.scrollLeft = source.scrollLeft;
-        }
-
-        // Reset the scrolling flag after a small delay
-        // This ensures smooth scrolling while preventing potential loops
-        setTimeout(() => {
-          isScrolling.current = false;
-        }, 50);
-      };
-
-      // Clear any existing timeout
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
       }
 
-      // Debounce the scroll sync if debounceTime is set
-      if (debounceTime > 0) {
-        timeoutRef.current = setTimeout(syncScroll, debounceTime);
-      } else {
-        syncScroll();
-      }
+      timeoutId = window.setTimeout(() => {
+        isScrolling.current = false;
+      }, 10); // Fixed small delay for better performance
     };
 
-    // Add scroll event listener to source element
-    source.addEventListener('scroll', handleScroll);
+    source.addEventListener("scroll", handleScroll, { passive: true });
 
-    // Cleanup function
     return () => {
-      source.removeEventListener('scroll', handleScroll);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      source.removeEventListener("scroll", handleScroll);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
       }
     };
-  }, [sourceRef, targetRef, vertical, horizontal, debounceTime]);
+  }, [sourceRef, targetRef, vertical, horizontal]);
 }
-
-// Example usage:
-/*
-function MyComponent() {
-  const sourceRef = useRef<HTMLDivElement>(null);
-  const targetRef = useRef<HTMLDivElement>(null);
-
-  useScrollSync(sourceRef, targetRef, {
-    vertical: true,
-    horizontal: true,
-    debounceTime: 10
-  });
-
-  return (
-    <>
-      <div ref={sourceRef}>Source content</div>
-      <div ref={targetRef}>Target content</div>
-    </>
-  );
-}
-*/
