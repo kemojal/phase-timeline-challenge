@@ -115,7 +115,7 @@ Interface
 
 
 
-![Track List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/04-tract-list-test.gif?raw=true)
+![Track List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/04-track-list-test.gif?raw=true)
 
 <!-- https://github.com/user-attachments/assets/94b5e2c8-ef32-488e-97e4-d53036bbf2f7 -->
 
