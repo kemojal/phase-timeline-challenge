@@ -30,7 +30,7 @@
 - `src/Timeline/__tests__/KeyframeList.test.tsx` - Tests for the Keyframe List component
 - `src/Timeline/__tests__/Playhead.test.tsx` - Tests for the Playhead component component
 
-<table>
+<table cellspacing="0" cellpadding="0" style="width:100%; text-align: center;">
   <tr>
     <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/01-number-input.png?raw=true" width="100"></td>
     <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/02-playcontrol.png?raw=true" width="100"></td>
@@ -45,7 +45,7 @@
     <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/06-playhead.png?raw=true" width="100"></td>
     
   </tr>
-</table>
+</style=>
 
 ## User Behavior Requirements
 
