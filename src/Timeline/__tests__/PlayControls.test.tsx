@@ -93,4 +93,34 @@ describe("PlayControls Component", () => {
     fireEvent.blur(currentTimeInput);
     expect(setTime).toHaveBeenCalledWith(1750); // Should round down to nearest integer
   });
+
+  test("Playhead position updates only after specific actions (blur, Enter, arrow keys)", () => {
+    const currentTimeInput = screen.getByTestId("current-time-input");
+  
+    // Typing alone should NOT trigger an update
+    fireEvent.change(currentTimeInput, { target: { value: "1500" } });
+    expect(setTime).not.toHaveBeenCalled(); // Should NOT trigger update yet
+  
+    // Pressing Enter should trigger an update
+    fireEvent.keyDown(currentTimeInput, { key: "Enter" });
+    expect(setTime).toHaveBeenCalledWith(1500); // Now it should update
+  
+    setTime.mockClear();
+  
+    // Pressing Arrow Up should trigger an update and increment by step (10)
+    fireEvent.keyDown(currentTimeInput, { key: "ArrowUp" });
+    expect(setTime).toHaveBeenCalledWith(1510); // Should increment by 10
+  
+    setTime.mockClear();
+  
+    // Pressing Arrow Down should trigger an update and decrement by step (10)
+    fireEvent.keyDown(currentTimeInput, { key: "ArrowDown" });
+    expect(setTime).toHaveBeenCalledWith(1500); // Should decrement by 10
+  
+    setTime.mockClear();
+  
+    // Losing focus should trigger an update
+    fireEvent.blur(currentTimeInput);
+    expect(setTime).toHaveBeenCalledWith(1500); // Should update on blur
+  });
 });
