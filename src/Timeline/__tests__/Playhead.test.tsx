@@ -1,55 +1,130 @@
 import { render, screen } from "@testing-library/react";
 import { Playhead } from "../Playhead";
+import * as timelineStore from "../../stores/timelineStore";
+
+// Mock the Zustand store
+jest.mock("../../stores/timelineStore", () => ({
+  useTimelineStore: jest.fn(),
+}));
 
 describe("Playhead Component", () => {
-  const duration = 1000; // Timeline width/duration in pixels/ms
+  const duration = 1000;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   test("Playhead moves in sync with the Ruler and Keyframe List during horizontal scrolling", () => {
-    const { rerender } = render(
-      <Playhead time={500} scrollLeft={0} duration={duration} />
-    );
+    // Initial store state
+    const mockStore = {
+      time: 500,
+      duration,
+      scrollLeft: 0,
+      setTime: jest.fn(),
+      setScrollLeft: jest.fn(),
+      setDuration: jest.fn(),
+    };
 
+    // Set up store mock
+    jest
+      .spyOn(timelineStore, "useTimelineStore")
+      .mockImplementation(() => mockStore);
+
+    const { rerender } = render(<Playhead />);
     const playhead = screen.getByTestId("playhead");
     expect(playhead).toHaveStyle(`transform: translateX(calc(500px - 50%))`);
 
-    rerender(<Playhead time={500} scrollLeft={100} duration={duration} />);
+    // Update scrollLeft
+    mockStore.scrollLeft = 100;
+    jest.spyOn(timelineStore, "useTimelineStore").mockImplementation(() => ({
+      ...mockStore,
+    }));
+    rerender(<Playhead />);
     expect(playhead).toHaveStyle(`transform: translateX(calc(400px - 50%))`);
   });
 
   test("Playhead maintains its relative position during horizontal scrolling", () => {
-    const { rerender } = render(
-      <Playhead time={600} scrollLeft={200} duration={duration} />
-    );
+    // Initial store state
+    const mockStore = {
+      time: 600,
+      duration,
+      scrollLeft: 200,
+      setTime: jest.fn(),
+      setScrollLeft: jest.fn(),
+      setDuration: jest.fn(),
+    };
 
+    // Set up store mock
+    jest
+      .spyOn(timelineStore, "useTimelineStore")
+      .mockImplementation(() => mockStore);
+
+    const { rerender } = render(<Playhead />);
     const playhead = screen.getByTestId("playhead");
     expect(playhead).toHaveStyle(`transform: translateX(calc(400px - 50%))`);
 
-    rerender(<Playhead time={700} scrollLeft={300} duration={duration} />);
+    // Update time and scrollLeft
+    mockStore.time = 700;
+    mockStore.scrollLeft = 300;
+    jest.spyOn(timelineStore, "useTimelineStore").mockImplementation(() => ({
+      ...mockStore,
+    }));
+    rerender(<Playhead />);
     expect(playhead).toHaveStyle(`transform: translateX(calc(400px - 50%))`);
   });
 
   test("Playhead is visible only when within the Timeline's visible area", () => {
-    // Test when playhead is within visible area
-    const { rerender } = render(
-      <Playhead time={500} scrollLeft={100} duration={duration} />
-    );
+    // Initial store state
+    const mockStore = {
+      time: 500,
+      duration,
+      scrollLeft: 100,
+      setTime: jest.fn(),
+      setScrollLeft: jest.fn(),
+      setDuration: jest.fn(),
+    };
+
+    // Set up store mock
+    jest
+      .spyOn(timelineStore, "useTimelineStore")
+      .mockImplementation(() => mockStore);
+
+    const { rerender } = render(<Playhead />);
     const playhead = screen.getByTestId("playhead");
+
+    // Test when playhead is within visible area
     expect(playhead).not.toHaveAttribute("hidden");
 
     // Test when playhead is at the start of visible area
-    rerender(<Playhead time={100} scrollLeft={100} duration={duration} />);
+    mockStore.time = 100;
+    jest.spyOn(timelineStore, "useTimelineStore").mockImplementation(() => ({
+      ...mockStore,
+    }));
+    rerender(<Playhead />);
     expect(playhead).not.toHaveAttribute("hidden");
 
     // Test when playhead is at the end of visible area
-    rerender(<Playhead time={1000} scrollLeft={100} duration={duration} />);
+    mockStore.time = 1000;
+    jest.spyOn(timelineStore, "useTimelineStore").mockImplementation(() => ({
+      ...mockStore,
+    }));
+    rerender(<Playhead />);
     expect(playhead).not.toHaveAttribute("hidden");
 
     // Test when playhead is before visible area
-    rerender(<Playhead time={50} scrollLeft={100} duration={duration} />);
+    mockStore.time = 50;
+    jest.spyOn(timelineStore, "useTimelineStore").mockImplementation(() => ({
+      ...mockStore,
+    }));
+    rerender(<Playhead />);
     expect(playhead).toHaveAttribute("hidden");
 
     // Test when playhead is after visible area
-    rerender(<Playhead time={1200} scrollLeft={100} duration={duration} />);
+    mockStore.time = 1200;
+    jest.spyOn(timelineStore, "useTimelineStore").mockImplementation(() => ({
+      ...mockStore,
+    }));
+    rerender(<Playhead />);
     expect(playhead).toHaveAttribute("hidden");
   });
 });
