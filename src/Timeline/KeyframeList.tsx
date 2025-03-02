@@ -1,51 +1,55 @@
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect } from "react";
 import { Segment } from "./Segment";
 
 interface KeyframeListProps {
   duration: number;
+  keyframeListRef: RefObject<HTMLDivElement>;
+  rulerRef: RefObject<HTMLDivElement>;
 }
 
-export const KeyframeList = ({ duration }: KeyframeListProps) => {
-  const keyframeListRef = useRef<HTMLDivElement | null>(null);
+export const KeyframeList = ({
+  duration,
+  keyframeListRef,
+  rulerRef,
+}: KeyframeListProps) => {
   // TODO: implement scroll sync with `Ruler` and `TrackList`
 
-  // Sync scroll with Ruler
+  // Sync horizontal scrolling with Ruler
   useEffect(() => {
-    const keyframeList = keyframeListRef.current;
-    const ruler = document.querySelector('[data-testid="ruler"]');
-
-    if (!keyframeList || !ruler) return;
-
-    const handleKeyframeScroll = () => {
-      if (ruler instanceof HTMLElement) {
-        ruler.scrollLeft = keyframeList.scrollLeft;
+    const syncHorizontalScroll = () => {
+      if (rulerRef.current && keyframeListRef.current) {
+        rulerRef.current.scrollLeft = keyframeListRef.current.scrollLeft;
       }
     };
 
-    keyframeList.addEventListener("scroll", handleKeyframeScroll);
+    keyframeListRef.current?.addEventListener("scroll", syncHorizontalScroll);
 
     return () => {
-      keyframeList.removeEventListener("scroll", handleKeyframeScroll);
+      keyframeListRef.current?.removeEventListener(
+        "scroll",
+        syncHorizontalScroll
+      );
     };
-  }, []);
+  }, [keyframeListRef, rulerRef]);
+  
 
   return (
     <div
       ref={keyframeListRef}
       className="overflow-auto px-4 min-w-0"
       data-testid="keyframe-list"
-      style={{  minHeight: "100%" }}
+      style={{ minHeight: "100%" }}
     >
-      <Segment duration={duration}/>
-      <Segment duration={duration}/>
-      <Segment duration={duration}/>
-      <Segment duration={duration}/>
-      <Segment duration={duration}/>
-      <Segment duration={duration}/>
-      <Segment duration={duration}/>
-      <Segment duration={duration}/>
-      <Segment duration={duration}/>
-      <Segment duration={duration}/>
+      <Segment duration={duration} />
+      <Segment duration={duration} />
+      <Segment duration={duration} />
+      <Segment duration={duration} />
+      <Segment duration={duration} />
+      <Segment duration={duration} />
+      <Segment duration={duration} />
+      <Segment duration={duration} />
+      <Segment duration={duration} />
+      <Segment duration={duration} />
     </div>
   );
 };

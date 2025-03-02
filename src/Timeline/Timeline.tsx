@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Playhead } from "./Playhead";
 import { Ruler } from "./Ruler";
 import { TrackList } from "./TrackList";
@@ -8,9 +8,47 @@ import { PlayControls } from "./PlayControls";
 export const Timeline = () => {
   // FIXME: performance concerned
   const [time, setTime] = useState(0);
-  const [ duration, setDuration ] = useState(1000);
-  // const scrollRef = useRef<HTMLDivElement | null>(null);
-  
+  const [duration, setDuration] = useState(1000);
+  const rulerRef = useRef<HTMLDivElement | null>(null);
+  const keyframeListRef = useRef<HTMLDivElement>(null);
+
+  // Synchronize horizontal scrolling between Ruler and KeyframeList
+  useEffect(() => {
+    const syncHorizontalScroll = (
+      sourceRef: React.RefObject<HTMLDivElement>,
+      targetRef: React.RefObject<HTMLDivElement>
+    ) => {
+      const handleScroll = (e: Event) => {
+        if (
+          sourceRef.current &&
+          targetRef.current &&
+          e.target === sourceRef.current
+        ) {
+          targetRef.current.scrollLeft = sourceRef.current.scrollLeft;
+        }
+      };
+
+      sourceRef.current?.addEventListener("scroll", handleScroll);
+
+      return () => {
+        sourceRef.current?.removeEventListener("scroll", handleScroll);
+      };
+    };
+
+    const cleanupRulerToKeyframe = syncHorizontalScroll(
+      rulerRef,
+      keyframeListRef
+    );
+    const cleanupKeyframeToRuler = syncHorizontalScroll(
+      keyframeListRef,
+      rulerRef
+    );
+
+    return () => {
+      cleanupRulerToKeyframe();
+      cleanupKeyframeToRuler();
+    };
+  }, []);
 
   return (
     <div
@@ -18,12 +56,24 @@ export const Timeline = () => {
     bg-gray-800 border-t-2 border-solid border-gray-700"
       data-testid="timeline"
     >
-      <PlayControls time={time} setTime={setTime} 
-      duration={duration} setDuration={setDuration}
+      <PlayControls
+        time={time}
+        setTime={setTime}
+        duration={duration}
+        setDuration={setDuration}
       />
-      <Ruler time={time} setTime={setTime}  duration={duration} />
+      <Ruler
+        time={time}
+        setTime={setTime}
+        duration={duration}
+        rulerRef={rulerRef}
+      />
       <TrackList />
-      <KeyframeList duration={duration} />
+      <KeyframeList
+        duration={duration}
+        keyframeListRef={keyframeListRef}
+        rulerRef={rulerRef}
+      />
       <Playhead time={time} />
     </div>
   );

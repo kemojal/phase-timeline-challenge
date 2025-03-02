@@ -1,16 +1,13 @@
-import { MouseEvent, useRef } from "react";
+import { MouseEvent, RefObject } from "react";
 
 interface RulerProps {
   time?: number;
   setTime: (time: number) => void;
   duration: number;
+  rulerRef: RefObject<HTMLDivElement>;
 }
 
-export const Ruler = ({
-  setTime,
-  duration,
-}: RulerProps) => {
-  const rulerRef = useRef<HTMLDivElement | null>(null);
+export const Ruler = ({ setTime, duration, rulerRef }: RulerProps) => {
   let padding = 16;
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -37,29 +34,15 @@ export const Ruler = ({
     setTime(newTime);
   };
 
-  // Sync scroll with Keyframe List
-  // Sync scroll with KeyframeList
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    // Find the keyframe list element
-    const keyframeList = document.querySelector(
-      '[data-testid="keyframe-list"]'
-    );
-    if (keyframeList && keyframeList instanceof HTMLElement) {
-      // Sync scroll position
-      keyframeList.scrollLeft = e.currentTarget.scrollLeft;
-    }
-  };
-
   // TODO: implement mousedown and mousemove to update time and Playhead position
 
   return (
     <div
       ref={rulerRef}
-      className="overflow-x-auto overflow-y-hidden px-4 py-2 min-w-0 border-b border-gray-700 border-solid"
+      className="overflow-x-auto overflow-y-hidden px-4 py-2 min-w-0 border-b border-gray-700 border-solid select-none"
       data-testid="ruler"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
-      onScroll={handleScroll}
     >
       <div
         style={{ width: `${duration}px` }}
