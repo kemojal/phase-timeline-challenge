@@ -154,7 +154,7 @@ src/
 - `feature/track-list`: Implement track list component and its tests
 - `feature/keyframe-list`: Implement keyframe list component and its tests
 - `feature/playhead`: Implement playhead component and its tests
-- `feature/state-management`: Implement state management for the timeline`
+- `feature/state-management`: Implement state management for the timeline
 
 ## User Behavior Requirements
 
@@ -162,15 +162,15 @@ src/
 
 #### Interface
 
-| Prop          | Type                             | Required | Description                                                        |
-| :------------ | :------------------------------- | :------: | :----------------------------------------------------------------- |
-| `value`       | `number`                         | &#10004; | The current value of the input field                               |
-| `onChange`    | `(value: number) => void`        | &#10004; | Callback function called when the value changes                    |
-| `min`         | `number`                         | &#10004; | Minimum allowed value                                              |
-| `max`         | `number`                         | &#10004; | Maximum allowed value                                              |
-| `step`        | `number`                         | &#10004; | Step value for increment/decrement operations                      |
-| `onKeyDown`   | `(event: KeyboardEvent) => void` | &#8211;  | Optional callback for handling keyboard events                     |
-| `data-testid` | `string`                         | &#8211;  | Optional test ID for testing purposes (defaults to "number-input") |
+| Prop          | Type                                               | Required | Description                                |
+| :------------ | :------------------------------------------------- | :------: | :----------------------------------------- |
+| `value`       | `number`                                           | &#10004; | Current value of the input field           |
+| `onChange`    | `(value: number) => void`                          | &#10004; | Called when value changes                  |
+| `min`         | `number`                                           | &#10004; | Minimum allowed value                      |
+| `max`         | `number`                                           | &#10004; | Maximum allowed value                      |
+| `step`        | `number`                                           | &#10004; | Step value for increment/decrement         |
+| `onKeyDown`   | `(event: KeyboardEvent<HTMLInputElement>) => void` | &#8211;  | Optional keyboard event handler            |
+| `data-testid` | `string`                                           | &#8211;  | Optional test ID (default: "number-input") |
 
 #### Behavior
 
@@ -195,12 +195,13 @@ src/
 
 #### Interface
 
-| Prop          | Type                         | Required | Description                         |
-| :------------ | :--------------------------- | :------: | :---------------------------------- |
-| `time`        | `number`                     | &#10004; | Current time value in milliseconds  |
-| `setTime`     | `(time: number) => void`     | &#10004; | Callback to update the current time |
-| `duration`    | `number`                     | &#10004; | Total duration in milliseconds      |
-| `setDuration` | `(duration: number) => void` | &#10004; | Callback to update the duration     |
+Uses Zustand store with the following state:
+| State | Type | Description |
+| :------------ | :------------------------ | :------------------------------------- |
+| `time` | `number` | Current time value in milliseconds |
+| `setTime` | `(time: number) => void` | Updates current time |
+| `duration` | `number` | Total duration in milliseconds |
+| `setDuration` | `(duration: number) => void` | Updates total duration |
 
 ![Play Controls Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/02-play-controls-test.gif?raw=true)
 
@@ -217,12 +218,14 @@ Behavior Test Case
 
 #### Interface
 
-| Prop       | Type                        | Required | Description                         |
-| :--------- | :-------------------------- | :------: | :---------------------------------- |
-| `time`     | `number`                    | &#10004; | Current time value in milliseconds  |
-| `setTime`  | `(time: number) => void`    | &#10004; | Callback to update the current time |
-| `duration` | `number`                    | &#10004; | Total duration in milliseconds      |
-| `rulerRef` | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization      |
+| Prop       | Type                        | Required | Description                    |
+| :--------- | :-------------------------- | :------: | :----------------------------- |
+| `rulerRef` | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization |
+
+Uses Zustand store for:
+
+- `setTime`: Function to update current time
+- `duration`: Total duration in milliseconds
 
 ![Ruler Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/03-ruler-test.gif?raw=true)
 
@@ -235,10 +238,10 @@ Behavior Test Case
 
 #### Interface
 
-| Prop              | Type                        | Required | Description                                       |
-| :---------------- | :-------------------------- | :------: | :------------------------------------------------ |
-| `trackListRef`    | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization                    |
-| `keyframeListRef` | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization with Keyframe List |
+| Prop              | Type                        | Required | Description                    |
+| :---------------- | :-------------------------- | :------: | :----------------------------- |
+| `trackListRef`    | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization |
+| `keyframeListRef` | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization |
 
 ![Track List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/04-track-list-test.gif?raw=true)
 
@@ -250,12 +253,15 @@ Behavior test
 
 #### Interface
 
-| Prop              | Type                        | Required | Description                               |
-| :---------------- | :-------------------------- | :------: | :---------------------------------------- |
-| `duration`        | `number`                    | &#10004; | Total duration in milliseconds            |
-| `keyframeListRef` | `RefObject<HTMLDivElement>` | &#10004; | Ref for horizontal scroll synchronization |
-| `rulerRef`        | `RefObject<HTMLDivElement>` | &#10004; | Ref for horizontal scroll synchronization |
-| `trackListRef`    | `RefObject<HTMLDivElement>` | &#10004; | Ref for vertical scroll synchronization   |
+| Prop              | Type                        | Required | Description                    |
+| :---------------- | :-------------------------- | :------: | :----------------------------- |
+| `keyframeListRef` | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization |
+| `rulerRef`        | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization |
+| `trackListRef`    | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization |
+
+Uses Zustand store for:
+
+- `duration`: Total duration in milliseconds
 
 ![Keyframe List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/05-keyframe-list-test.gif?raw=true)
 
@@ -270,11 +276,12 @@ Behavior test
 
 #### Interface
 
-| Prop         | Type     | Required | Description                        |
-| :----------- | :------- | :------: | :--------------------------------- |
-| `time`       | `number` | &#10004; | Current time value in milliseconds |
-| `scrollLeft` | `number` | &#10004; | Current horizontal scroll position |
-| `duration`   | `number` | &#10004; | Total duration in milliseconds     |
+Uses Zustand store with the following state:
+| State | Type | Description |
+| :---------- | :------- | :------------------------------------- |
+| `time` | `number` | Current time value in milliseconds |
+| `duration` | `number` | Total duration in milliseconds |
+| `scrollLeft`| `number` | Current horizontal scroll position |
 
 ![Playhead Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/06-playhead-test.gif?raw=true)
 
@@ -283,5 +290,3 @@ Behavior test
 - [x] Playhead moves in sync with the Ruler and Keyframe List during horizontal scrolling
 - [x] Playhead maintains its relative position during horizontal scrolling
 - [x] Playhead is visible only when within the Timeline's visible area, using the `hidden` attribute when completely out of view
-
-
