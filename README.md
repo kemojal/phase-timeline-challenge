@@ -65,13 +65,9 @@ Interface
 | `duration`    | `number`                     | Total duration in milliseconds      |
 | `setDuration` | `(duration: number) => void` | Callback to update the duration     |
 
-
 ![Play Controls Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/02-play-controls-test.gif?raw=true)
 
-
-<!-- https://github.com/user-attachments/assets/9a669854-e0c5-4950-8364-10fe0b40d16b -->
-
-Behavior
+Behavior Test Case
 
 - [x] Current Time is always between `0ms` and the Duration
 - [x] Current Time adjusts if it exceeds the newly set Duration
@@ -90,13 +86,9 @@ Interface
 | `duration` | `number` | Total duration in milliseconds |
 | `rulerRef` | `RefObject<HTMLDivElement>` | Ref for scroll synchronization |
 
-Behavior
-
+Behavior test
 
 ![Ruler Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/03-ruler-test.gif?raw=true)
-
-
-<!-- https://github.com/user-attachments/assets/42190ade-f708-45a1-8168-2be779c66390 -->
 
 - [x] Clicking or dragging on the Ruler updates the Current Time and Playhead position
 - [x] Horizontal scrolling of the Ruler is synchronized with the Keyframe List
@@ -113,13 +105,11 @@ Interface
 | `setTime` | `(time: number) => void` | Callback to update the current time |
 | `duration` | `number` | Total duration in milliseconds |
 
-
-
 ![Track List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/04-track-list-test.gif?raw=true)
 
 <!-- https://github.com/user-attachments/assets/94b5e2c8-ef32-488e-97e4-d53036bbf2f7 -->
 
-Behavior
+Behavior test
 
 - [x] Vertical scrolling of the Track List is synchronized with the Keyframe List
 
@@ -133,12 +123,9 @@ Interface
 | `rulerRef` | `RefObject<HTMLDivElement>` | Ref for horizontal scroll synchronization |
 | `trackListRef` | `RefObject<HTMLDivElement>` | Ref for vertical scroll synchronization |
 
-
 ![Keyframe List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/05-keyframe-list-test.gif?raw=true)
 
-<!-- https://github.com/user-attachments/assets/99826161-f821-4e4d-b9a8-b59c16d9894e -->
-
-Behavior
+Behavior test
 
 - [x] Vertical scrolling is synchronized with the Track List
 - [x] Horizontal scrolling is synchronized with the Ruler
@@ -154,12 +141,11 @@ Interface
 | `scrollLeft` | `number` | Current horizontal scroll position |
 | `duration` | `number` | Total duration in milliseconds |
 
-
 ![Playhead Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/06-playhead-test.gif?raw=true)
 
 <!-- https://github.com/user-attachments/assets/3940cd0d-dd9d-4331-9172-592462ad65d3 -->
 
-Behavior
+Behavior test
 
 - [x] Playhead moves in sync with the Ruler and Keyframe List during horizontal scrolling
 - [x] Playhead maintains its relative position during horizontal scrolling
