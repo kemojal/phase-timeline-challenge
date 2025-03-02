@@ -106,37 +106,46 @@ describe("Ruler Component", () => {
   });
 
   //   // Test for scrolling synchronization between Ruler and KeyframeList
-  //   test("horizontal scrolling is synchronized between ruler and keyframe list", () => {
-  //     render(<Timeline />);
+    test("horizontal scrolling is synchronized between ruler and keyframe list", () => {
+      render(<Timeline />);
 
-  //     const ruler = screen.getByTestId("ruler");
-  //     const keyframeList = screen.getByTestId("keyframe-list");
+      const ruler = screen.getByTestId("ruler");
+      const keyframeList = screen.getByTestId("keyframe-list");
 
-  //     // Mock scrollLeft property
-  //     Object.defineProperty(ruler, "scrollLeft", {
-  //       configurable: true,
-  //       get: jest.fn(() => 0),
-  //       set: jest.fn(),
-  //     });
+      // Create scroll value trackers
+      let rulerScrollLeft = 0;
+      let keyframeListScrollLeft = 0;
 
-  //     Object.defineProperty(keyframeList, "scrollLeft", {
-  //       configurable: true,
-  //       get: jest.fn(() => 0),
-  //       set: jest.fn(),
-  //     });
+      // Mock scrollLeft for ruler
+      Object.defineProperty(ruler, "scrollLeft", {
+        configurable: true,
+        get: () => rulerScrollLeft,
+        set: (value) => {
+          rulerScrollLeft = value;
+        },
+      });
 
-  //     // Trigger scroll event on ruler
-  //     fireEvent.scroll(ruler, { target: { scrollLeft: 200 } });
+      // Mock scrollLeft for keyframeList
+      Object.defineProperty(keyframeList, "scrollLeft", {
+        configurable: true,
+        get: () => keyframeListScrollLeft,
+        set: (value) => {
+          keyframeListScrollLeft = value;
+        },
+      });
 
-  //     // Check if keyframeList.scrollLeft was set to 200
-  //     expect(keyframeList.scrollLeft).toBe(200);
+      // Trigger scroll event on ruler
+      fireEvent.scroll(ruler, { target: { scrollLeft: 200 } });
+      
+      // Check if keyframeList scrolled to match ruler
+      expect(keyframeListScrollLeft).toBe(200);
 
-  //     // Trigger scroll event on keyframeList
-  //     fireEvent.scroll(keyframeList, { target: { scrollLeft: 300 } });
-
-  //     // Check if ruler.scrollLeft was set to 300
-  //     expect(ruler.scrollLeft).toBe(300);
-  //   });
+      // Trigger scroll event on keyframeList
+      fireEvent.scroll(keyframeList, { target: { scrollLeft: 300 } });
+      
+      // Check if ruler scrolled to match keyframeList
+      expect(rulerScrollLeft).toBe(300);
+    });
 
   // Test ruler length visual representation and updates
   test("ruler length visually represents the total duration with 1ms = 1px ratio", () => {
