@@ -1,5 +1,6 @@
 import { render, fireEvent, screen } from "@testing-library/react";
 import { Ruler } from "../Ruler";
+import { Timeline } from "../Timeline";
 
 describe("Ruler Component", () => {
   test("clicking on the ruler updates the current time and playhead position", async () => {
@@ -85,26 +86,64 @@ describe("Ruler Component", () => {
     ruler.getBoundingClientRect = originalGetBoundingClientRect;
   });
 
-  test('mousemove without button pressed should not update time', () => {
+  test("mousemove without button pressed should not update time", () => {
     const setTimeMock = jest.fn();
     const duration = 1000;
-    const rulerRef = { current: document.createElement('div') };
-    
+    const rulerRef = { current: document.createElement("div") };
+
     render(
-      <Ruler 
-        setTime={setTimeMock} 
-        duration={duration} 
-        rulerRef={rulerRef} 
-      />
+      <Ruler setTime={setTimeMock} duration={duration} rulerRef={rulerRef} />
     );
-    
-    const ruler = screen.getByTestId('ruler');
-    
+
+    const ruler = screen.getByTestId("ruler");
+
     // Simulate mousemove without mousedown first
     fireEvent.mouseMove(ruler, { clientX: 216, buttons: 0 });
-    
+
     // setTime should not be called
     expect(setTimeMock).not.toHaveBeenCalled();
   });
 
+  //   // Test for scrolling synchronization between Ruler and KeyframeList
+  //   test("horizontal scrolling is synchronized between ruler and keyframe list", () => {
+  //     render(<Timeline />);
+
+  //     const ruler = screen.getByTestId("ruler");
+  //     const keyframeList = screen.getByTestId("keyframe-list");
+
+  //     // Mock scrollLeft property
+  //     Object.defineProperty(ruler, "scrollLeft", {
+  //       configurable: true,
+  //       get: jest.fn(() => 0),
+  //       set: jest.fn(),
+  //     });
+
+  //     Object.defineProperty(keyframeList, "scrollLeft", {
+  //       configurable: true,
+  //       get: jest.fn(() => 0),
+  //       set: jest.fn(),
+  //     });
+
+  //     // Trigger scroll event on ruler
+  //     fireEvent.scroll(ruler, { target: { scrollLeft: 200 } });
+
+  //     // Check if keyframeList.scrollLeft was set to 200
+  //     expect(keyframeList.scrollLeft).toBe(200);
+
+  //     // Trigger scroll event on keyframeList
+  //     fireEvent.scroll(keyframeList, { target: { scrollLeft: 300 } });
+
+  //     // Check if ruler.scrollLeft was set to 300
+  //     expect(ruler.scrollLeft).toBe(300);
+  //   });
+
+  // Test ruler length visual representation and updates
+  test("ruler length visually represents the total duration with 1ms = 1px ratio", () => {
+    render(<Timeline />);
+
+    const rulerBar = screen.getByTestId("ruler-bar");
+
+    // Initial duration is 1000, so width should be 1000px
+    expect(rulerBar).toHaveStyle("width: 1000px");
+  });
 });
