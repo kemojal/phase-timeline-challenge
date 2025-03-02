@@ -1,4 +1,5 @@
 import { render, fireEvent, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Ruler } from "../Ruler";
 import { Timeline } from "../Timeline";
 
@@ -147,47 +148,26 @@ describe("Ruler Component", () => {
     expect(rulerBar).toHaveStyle("width: 1000px");
   });
 
-//   test("ruler length updates when duration changes through PlayControls", async () => {
-//     const user = userEvent.setup();
-//     render(<Timeline />);
+  test("ruler length updates when duration changes through PlayControls", () => {
+    render(<Timeline />);
 
-//     // Get the ruler bar and duration input using the correct data-testid
-//     const rulerBar = screen.getByTestId("ruler-bar");
-//     const durationInput = screen.getByTestId("duration-input");
+    // Get the ruler bar and duration input using the correct data-testid
+    const rulerBar = screen.getByTestId("ruler-bar");
+    const durationInput = screen.getByTestId("duration-input");
 
-//     // Check initial width
-//     expect(rulerBar).toHaveStyle("width: 1000px");
+    // Check initial width
+    expect(rulerBar).toHaveStyle("width: 1000px");
 
-//     // Change duration to 2000 and press Enter
-//     await user.clear(durationInput);
-//     await user.type(durationInput, "2000");
-//     fireEvent.keyDown(durationInput, { key: "Enter", code: "Enter" });
+    // Change duration to 2000 and trigger blur to apply the change
+    fireEvent.change(durationInput, { target: { value: "2000" } });
+    fireEvent.blur(durationInput);
 
-//     // Check updated width
-//     expect(rulerBar).toHaveStyle("width: 2000px");
+    // Check that the ruler bar width updated
+    expect(rulerBar).toHaveStyle("width: 2000px");
+  });
 
-//     // Change duration to 3000 and blur (lose focus)
-//     await user.clear(durationInput);
-//     await user.type(durationInput, "3000");
-//     fireEvent.blur(durationInput);
-
-//     // Check updated width again
-//     expect(rulerBar).toHaveStyle("width: 3000px");
-
-//     // Test arrow keys
-//     await user.clear(durationInput);
-//     await user.type(durationInput, "3000");
-//     fireEvent.keyDown(durationInput, { key: "ArrowUp", code: "ArrowUp" });
-
-//     // Assuming ArrowUp increases by 10 (based on step="10" in the input)
-//     expect(rulerBar).toHaveStyle("width: 3010px");
-
-//     fireEvent.keyDown(durationInput, { key: "ArrowDown", code: "ArrowDown" });
-//     // Back to 3000
-//     expect(rulerBar).toHaveStyle("width: 3000px");
-//   });
- // Test for integration with Playhead position
- test('updating time via ruler updates playhead position', async () => {
+  // Test for integration with Playhead position
+  test('updating time via ruler updates playhead position', async () => {
     render(<Timeline />);
     
     const ruler = screen.getByTestId('ruler');
