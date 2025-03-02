@@ -52,7 +52,7 @@ export function useScrollSync(
       }, 10); // Fixed small delay for better performance
     };
 
-    source.addEventListener("scroll", handleScroll, { passive: true });
+    source.addEventListener("scroll", handleScroll);
 
     return () => {
       source.removeEventListener("scroll", handleScroll);
