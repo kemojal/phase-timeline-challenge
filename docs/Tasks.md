@@ -141,7 +141,7 @@
 
 - [ ] Add zoom functionality
 - [ ] Implement drag-and-drop
-- [ ] Add timeline markers
+- [x] Add timeline markers
 - [ ] Implement snap-to-grid
 
 ### 7.2 Animation
