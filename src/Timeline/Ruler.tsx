@@ -1,12 +1,86 @@
-import { MouseEvent, RefObject } from "react";
+import { MouseEvent, RefObject, useCallback } from "react";
 import { useTimeControl } from "../hooks/useTimeControl";
 
 interface RulerProps {
   rulerRef: RefObject<HTMLDivElement>;
 }
 
+const DurationKnob = ({
+  duration,
+  onDurationChange,
+  rulerRef,
+  setTime,
+  time,
+}: {
+  duration: number;
+  onDurationChange: (newDuration: number) => void;
+  rulerRef: RefObject<HTMLDivElement>;
+  setTime: (time: number) => void;
+  time: number;
+}) => {
+  const handleMouseDown = useCallback(
+    (e: MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const startX = e.clientX;
+      const startDuration = duration;
+
+      const handleMouseMove = (e: MouseEvent) => {
+        if (!rulerRef.current) return;
+
+        // Update duration based on drag
+        const deltaX = e.clientX - startX;
+        const newDuration = Math.max(
+          100,
+          Math.round((startDuration + deltaX) / 10) * 10
+        );
+        onDurationChange(newDuration);
+
+        // Only update playhead when reducing duration and current time is beyond new duration
+        if (deltaX < 0 && time > newDuration) {
+          setTime(newDuration);
+        }
+      };
+
+      const handleMouseUp = () => {
+        document.removeEventListener("mousemove", handleMouseMove as any);
+        document.removeEventListener("mouseup", handleMouseUp);
+      };
+
+      document.addEventListener("mousemove", handleMouseMove as any);
+      document.addEventListener("mouseup", handleMouseUp);
+    },
+    [duration, onDurationChange, rulerRef, setTime, time]
+  );
+
+  return (
+    <div
+      className="group absolute -top-3 -right-1.5 z-50 flex h-8 w-3 cursor-ew-resize flex-col items-center justify-center gap-[2px] rounded bg-gray-800/80 shadow-lg backdrop-blur-sm transition-all hover:bg-gray-700/80 active:bg-gray-600/80 touch-none"
+      onMouseDown={handleMouseDown}
+      data-testid="duration-knob"
+    >
+      {/* Duration tooltip */}
+      <div className="absolute -top-5 px-1.5 py-0.5 text-[10px] text-white rounded shadow-xl opacity-0 transition-opacity bg-gray-900/90 group-hover:opacity-100 whitespace-nowrap">
+        {(duration / 1000).toFixed(1)}s
+      </div>
+
+      {/* Grip lines */}
+      <div className="flex flex-col gap-[2px]">
+        <div className="h-[1px] w-1.5 rounded-full bg-white/60 group-hover:bg-white/80" />
+        <div className="h-[1px] w-1.5 rounded-full bg-white/60 group-hover:bg-white/80" />
+        <div className="h-[1px] w-1.5 rounded-full bg-white/60 group-hover:bg-white/80" />
+      </div>
+
+      {/* Side indicators */}
+      <div className="absolute -left-0.5 top-1/2 h-3 w-[1px] -translate-y-1/2 rounded-full bg-white/20 group-hover:bg-white/30" />
+      <div className="absolute -right-0.5 top-1/2 h-3 w-[1px] -translate-y-1/2 rounded-full bg-white/20 group-hover:bg-white/30" />
+    </div>
+  );
+};
+
 export const Ruler = ({ rulerRef }: RulerProps) => {
-  const { setTime, duration } = useTimeControl();
+  const { setTime, time, duration, setDuration } = useTimeControl();
   let padding = 16;
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -15,6 +89,10 @@ export const Ruler = ({ rulerRef }: RulerProps) => {
   };
 
   const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.closest('[data-testid="duration-knob"]')) {
+      return; // Don't handle mousedown if clicking the knob
+    }
     updateTime(event);
   };
 
@@ -67,7 +145,7 @@ export const Ruler = ({ rulerRef }: RulerProps) => {
   return (
     <div
       ref={rulerRef}
-      className="overflow-x-auto overflow-y-hidden px-4 py-2 min-w-0 border-b border-gray-700 border-solid select-none"
+      className="overflow-x-auto overflow-y-hidden relative px-4 py-2 min-w-0 border-b border-gray-700 border-solid select-none"
       data-testid="ruler"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
@@ -78,6 +156,13 @@ export const Ruler = ({ rulerRef }: RulerProps) => {
         className="relative h-6 rounded-md bg-white/10"
       >
         {renderMarkers()}
+        <DurationKnob
+          duration={duration}
+          onDurationChange={setDuration}
+          rulerRef={rulerRef}
+          setTime={setTime}
+          time={time}
+        />
       </div>
     </div>
   );
