@@ -66,7 +66,7 @@ Interface
 | `setDuration` | `(duration: number) => void` | Callback to update the duration     |
 
 
-[Play Controls Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/02-play-controls-test.gif?raw=true)
+![Play Controls Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/02-play-controls-test.gif?raw=true)
 
 
 <!-- https://github.com/user-attachments/assets/9a669854-e0c5-4950-8364-10fe0b40d16b -->
@@ -93,7 +93,7 @@ Interface
 Behavior
 
 
-[Ruler Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/03-ruler-test.gif?raw=true)
+![Ruler Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/03-ruler-test.gif?raw=true)
 
 
 <!-- https://github.com/user-attachments/assets/42190ade-f708-45a1-8168-2be779c66390 -->
@@ -115,7 +115,7 @@ Interface
 
 
 
-[Track List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/04-tract-list-test.gif?raw=true)
+![Track List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/04-tract-list-test.gif?raw=true)
 
 <!-- https://github.com/user-attachments/assets/94b5e2c8-ef32-488e-97e4-d53036bbf2f7 -->
 
@@ -134,7 +134,7 @@ Interface
 | `trackListRef` | `RefObject<HTMLDivElement>` | Ref for vertical scroll synchronization |
 
 
-[Keyframe List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/05-keyframe-list-test.gif?raw=true)
+![Keyframe List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/05-keyframe-list-test.gif?raw=true)
 
 <!-- https://github.com/user-attachments/assets/99826161-f821-4e4d-b9a8-b59c16d9894e -->
 
@@ -155,7 +155,7 @@ Interface
 | `duration` | `number` | Total duration in milliseconds |
 
 
-[Playhead Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/06-playhead-test.gif?raw=true)
+![Playhead Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/06-playhead-test.gif?raw=true)
 
 <!-- https://github.com/user-attachments/assets/3940cd0d-dd9d-4331-9172-592462ad65d3 -->
 
