@@ -26,8 +26,8 @@
   - [x] Write tests
 - [x] Implement `useTimeControl` hook
   - [x] Extract time/duration logic
-  - [ ] Add validation and constraints
-  - [ ] Write tests
+  - [x] Add validation and constraints
+  - [x] Write tests
 
 ### 1.3 Component Refactoring
 
