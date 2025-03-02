@@ -45,7 +45,8 @@
     <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/06-playhead.png?raw=true" width="100"></td>
     
   </tr>
-</style=>
+  </table>
+
 
 ## User Behavior Requirements
 
