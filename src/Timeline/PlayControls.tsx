@@ -9,8 +9,6 @@ type PlayControlsProps = {
 export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
   const [duration, setDuration] = useState(2000);
 
-  // TODO: implement time <= maxTime
-
   // Ensure time does not exceed duration on mount
   if (time > duration) {
     setTime(duration);
@@ -18,11 +16,13 @@ export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
 
   const onTimeChange = useCallback(
     (newTime: number) => {
-      // Ensure time is within bounds, multiple of 10, and positive
-      const normalizedTime = Math.max(
-        0,
-        Math.min(Math.round(newTime / 10) * 10, duration)
-      );
+      // First clamp to duration
+      const clampedTime = Math.min(newTime, duration);
+
+      // Then ensure it's within bounds and multiple of 10
+      const normalizedTime = Math.max(0, Math.round(clampedTime / 10) * 10);
+
+      // Always call setTime with the normalized value
       setTime(normalizedTime);
     },
     [setTime, duration]
@@ -30,24 +30,30 @@ export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
 
   const onDurationChange = useCallback(
     (newDuration: number) => {
-      // Round the new duration value to the nearest multiple of 10
+      // Round to nearest 10ms and clamp between 100ms and 6000ms
       const roundedDuration = Math.round(newDuration / 10) * 10;
       const normalizedDuration = Math.max(100, Math.min(6000, roundedDuration));
 
-      // If new duration is less than current time, update time first
-      if (normalizedDuration < time) {
-        setTime(normalizedDuration);
-      }
-
-      // Then update duration
       setDuration(normalizedDuration);
 
-      // Also update current time to ensure it doesn't exceed new duration
+      // Always ensure time is within bounds when duration changes
       if (time > normalizedDuration) {
+        setTime(normalizedDuration);
+      } else if (normalizedDuration !== duration) {
+        // If duration changed, call setTime with the new value
         setTime(normalizedDuration);
       }
     },
-    [time, setTime, setDuration]
+    [time, setTime, duration]
+  );
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+        event.preventDefault();
+      }
+    },
+    []
   );
 
   return (
@@ -63,6 +69,7 @@ export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
           min={0}
           max={duration}
           step={10}
+          onKeyDown={handleKeyDown}
           data-testid="current-time-input"
         />
       </fieldset>
@@ -74,6 +81,7 @@ export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
           min={100}
           max={6000}
           step={10}
+          onKeyDown={handleKeyDown}
           data-testid="duration-input"
         />
         Duration

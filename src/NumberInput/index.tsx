@@ -13,6 +13,7 @@ type InputProps = {
   min: number;
   max: number;
   step: number;
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
   "data-testid"?: string;
 };
 
@@ -22,6 +23,7 @@ const NumberInput = ({
   min,
   max,
   step,
+  onKeyDown,
   "data-testid": testId = "number-input",
 }: InputProps) => {
   const [displayValue, setDisplayValue] = useState<string>(value.toString());
@@ -50,14 +52,8 @@ const NumberInput = ({
     // Round decimal values
     numValue = Math.round(numValue);
 
-    // Handle negative values
-    if (numValue < min) return min;
-
-    // Handle max boundary
-    if (numValue > max) return max;
-
-    // Ensure step compliance
-    return Math.round(numValue / step) * step;
+    // Handle negative values and max boundary
+    return Math.max(min, Math.min(Math.round(numValue / step) * step, max));
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -69,16 +65,18 @@ const NumberInput = ({
     const validatedValue = validateAndFormatValue(displayValue);
     setInternalValue(validatedValue);
     setDisplayValue(validatedValue.toString());
-    if (validatedValue !== value) {
-      onChange(validatedValue);
-    }
-  }, [displayValue, value, onChange, min, max, step, internalValue]);
+    // Always call onChange when confirming a value
+    onChange(validatedValue);
+  }, [displayValue, onChange, min, max, step]);
 
   const handleBlur = () => {
     confirmValue();
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleInternalKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    // Call external handler if provided
+    onKeyDown?.(e);
+
     switch (e.key) {
       case "Enter":
         confirmValue();
@@ -110,7 +108,6 @@ const NumberInput = ({
 
   const selectText = useCallback(() => {
     if (inputRef.current) {
-      // Do it immediately and also in a requestAnimationFrame for cross-browser reliability
       inputRef.current.select();
       requestAnimationFrame(() => {
         if (inputRef.current) {
@@ -136,7 +133,7 @@ const NumberInput = ({
       value={displayValue}
       onChange={handleChange}
       onBlur={handleBlur}
-      onKeyDown={handleKeyDown}
+      onKeyDown={handleInternalKeyDown}
       onFocus={handleFocus}
       onClick={handleStepperClick}
       min={min}
