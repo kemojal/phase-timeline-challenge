@@ -7,6 +7,8 @@ import { PlayControls } from "./PlayControls";
 
 export const Timeline = () => {
   // FIXME: performance concerned
+
+  // TODO: optimize the props and scroll syncing logic
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(1000);
   const rulerRef = useRef<HTMLDivElement | null>(null);
@@ -71,7 +73,7 @@ export const Timeline = () => {
         duration={duration}
         keyframeListRef={keyframeListRef}
         rulerRef={rulerRef}
-        trackListRef={trackListRef} 
+        trackListRef={trackListRef}
       />
       <Playhead time={time} />
     </div>
