@@ -283,10 +283,4 @@ Behavior test
 - [x] Playhead maintains its relative position during horizontal scrolling
 - [x] Playhead is visible only when within the Timeline's visible area, using the `hidden` attribute when completely out of view
 
-## Implementation Guidelines
 
-- Implement the required behaviors in the appropriate child components of the provided Timeline
-- Write comprehensive tests to ensure that the implementation meets the user behavior requirements, including edge cases
-- Consider performance implications, such as minimizing unnecessary re-renders
-- Pay attention to user experience and interface design
-- Write clean, well-documented, and maintainable code
