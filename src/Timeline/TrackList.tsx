@@ -35,7 +35,8 @@ export const TrackList = ({
     <div
       ref={trackListRef}
       className="grid grid-flow-row auto-rows-[40px]
-      border-r border-solid border-r-gray-700 
+      border-r border-solid border-r-gray-700
+      
       overflow-auto"
       data-testid="track-list"
     >

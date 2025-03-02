@@ -11,6 +11,8 @@ export const Timeline = () => {
   // TODO: optimize the props and scroll syncing logic
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(1000);
+  const [scrollLeft, setScrollLeft] = useState(0)
+
   const rulerRef = useRef<HTMLDivElement | null>(null);
   const keyframeListRef = useRef<HTMLDivElement>(null);
   const trackListRef = useRef<HTMLDivElement>(null);
@@ -24,9 +26,15 @@ export const Timeline = () => {
 
       if (!ruler || !keyframeList) return;
 
-      let newTime = Math.round(source.scrollLeft);  // Convert scroll to time
 
-      setTime(newTime); // Update playhead position
+      const newScrollLeft = source.scrollLeft;
+      setScrollLeft(newScrollLeft); // Update state to track horizontal scroll
+
+
+
+      // let newTime = Math.round(source.scrollLeft);  // Convert scroll to time
+
+      // setTime(newTime); // Update playhead position
 
       if (source === ruler) {
         keyframeList.scrollLeft = ruler.scrollLeft;
@@ -79,7 +87,9 @@ export const Timeline = () => {
         rulerRef={rulerRef}
         trackListRef={trackListRef}
       />
-      <Playhead time={time} />
+      <Playhead time={time}
+      scrollLeft={scrollLeft}
+       />
     </div>
   );
 };
