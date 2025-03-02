@@ -39,9 +39,6 @@ export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
       // Always ensure time is within bounds when duration changes
       if (time > normalizedDuration) {
         setTime(normalizedDuration);
-      } else if (normalizedDuration !== duration) {
-        // If duration changed, call setTime with the new value
-        setTime(normalizedDuration);
       }
     },
     [time, setTime, duration]

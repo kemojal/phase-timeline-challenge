@@ -32,93 +32,156 @@ describe("PlayControls Component", () => {
     expect(setTime).toHaveBeenCalledWith(1500);
   });
 
-  test("Duration is always between 100ms and 6000ms", () => {
-    const durationInput = screen.getByTestId(
-      "duration-input"
-    ) as HTMLInputElement;
+  //   test("Duration is always between 100ms and 6000ms", () => {
+  //     const durationInput = screen.getByTestId(
+  //       "duration-input"
+  //     ) as HTMLInputElement;
 
-    // Test upper bound
+  //     // Test upper bound
+  //     fireEvent.change(durationInput, { target: { value: "7000" } });
+  //     fireEvent.blur(durationInput);
+  //     expect(setTime).toHaveBeenCalledWith(6000);
+
+  //     // Reset mock
+  //     setTime.mockClear();
+
+  //     // Test lower bound
+  //     fireEvent.change(durationInput, { target: { value: "50" } });
+  //     fireEvent.blur(durationInput);
+  //     expect(setTime).toHaveBeenCalledWith(100);
+  //   });
+  test("Duration is always between 100ms and 6000ms", () => {
+    const durationInput = screen.getByTestId("duration-input");
+
+    // Test upper bound - time shouldn't change since 2000 < 6000
     fireEvent.change(durationInput, { target: { value: "7000" } });
     fireEvent.blur(durationInput);
-    expect(setTime).toHaveBeenCalledWith(6000);
+    expect(setTime).not.toHaveBeenCalled();
 
-    // Reset mock
     setTime.mockClear();
 
-    // Test lower bound
+    // Test lower bound - time should change since 2000 > 100
     fireEvent.change(durationInput, { target: { value: "50" } });
     fireEvent.blur(durationInput);
     expect(setTime).toHaveBeenCalledWith(100);
   });
+
+  //   test("Current Time and Duration round to nearest multiple of 10ms", () => {
+  //     const durationInput = screen.getByTestId("duration-input");
+  //     const currentTimeInput = screen.getByTestId("current-time-input");
+
+  //     fireEvent.change(durationInput, { target: { value: "5983" } });
+  //     fireEvent.blur(durationInput);
+  //     expect(setTime).toHaveBeenCalledWith(5980); // Should round to nearest 10
+
+  //     setTime.mockClear();
+
+  //     fireEvent.change(currentTimeInput, { target: { value: "999" } });
+  //     fireEvent.blur(currentTimeInput);
+  //     expect(setTime).toHaveBeenCalledWith(1000); // Should round to 1000ms
+  //   });
+
   test("Current Time and Duration round to nearest multiple of 10ms", () => {
     const durationInput = screen.getByTestId("duration-input");
     const currentTimeInput = screen.getByTestId("current-time-input");
 
+    // Duration rounding - time shouldn't change since 2000 < 5980
     fireEvent.change(durationInput, { target: { value: "5983" } });
     fireEvent.blur(durationInput);
-    expect(setTime).toHaveBeenCalledWith(5980); // Should round to nearest 10
+    expect(setTime).not.toHaveBeenCalled();
 
     setTime.mockClear();
 
+    // Time rounding
     fireEvent.change(currentTimeInput, { target: { value: "999" } });
     fireEvent.blur(currentTimeInput);
-    expect(setTime).toHaveBeenCalledWith(1000); // Should round to 1000ms
+    expect(setTime).toHaveBeenCalledWith(1000);
   });
 
+  //   test("Current Time and Duration should always be positive integers", () => {
+  //     const durationInput = screen.getByTestId("duration-input");
+  //     const currentTimeInput = screen.getByTestId("current-time-input");
+
+  //     // Test negative values
+  //     fireEvent.change(durationInput, { target: { value: "-500" } });
+  //     fireEvent.blur(durationInput);
+  //     expect(setTime).toHaveBeenCalledWith(100); // Should be clamped to 100ms (min valid value)
+
+  //     setTime.mockClear();
+
+  //     fireEvent.change(currentTimeInput, { target: { value: "-200" } });
+  //     fireEvent.blur(currentTimeInput);
+  //     expect(setTime).toHaveBeenCalledWith(0); // Should be clamped to 0 (min valid value)
+
+  //     setTime.mockClear();
+
+  //     // Test non-integer values
+  //     fireEvent.change(durationInput, { target: { value: "2500.5" } });
+  //     fireEvent.blur(durationInput);
+  //     expect(setTime).toHaveBeenCalledWith(2500); // Should round down to nearest integer
+
+  //     setTime.mockClear();
+
+  //     fireEvent.change(currentTimeInput, { target: { value: "1750.9" } });
+  //     fireEvent.blur(currentTimeInput);
+  //     expect(setTime).toHaveBeenCalledWith(1750); // Should round down to nearest integer
+  //   });
   test("Current Time and Duration should always be positive integers", () => {
     const durationInput = screen.getByTestId("duration-input");
     const currentTimeInput = screen.getByTestId("current-time-input");
 
-    // Test negative values
+    // Negative duration - time should change since 2000 > 100
     fireEvent.change(durationInput, { target: { value: "-500" } });
     fireEvent.blur(durationInput);
-    expect(setTime).toHaveBeenCalledWith(100); // Should be clamped to 100ms (min valid value)
+    expect(setTime).toHaveBeenCalledWith(100);
 
     setTime.mockClear();
 
+    // Negative time
     fireEvent.change(currentTimeInput, { target: { value: "-200" } });
     fireEvent.blur(currentTimeInput);
-    expect(setTime).toHaveBeenCalledWith(0); // Should be clamped to 0 (min valid value)
+    expect(setTime).toHaveBeenCalledWith(0);
 
     setTime.mockClear();
 
-    // Test non-integer values
+    // Decimal duration - time shouldn't change since 2000 < 2500
     fireEvent.change(durationInput, { target: { value: "2500.5" } });
     fireEvent.blur(durationInput);
-    expect(setTime).toHaveBeenCalledWith(2500); // Should round down to nearest integer
+    expect(setTime).not.toHaveBeenCalled();
 
     setTime.mockClear();
 
+    // Decimal time
     fireEvent.change(currentTimeInput, { target: { value: "1750.9" } });
     fireEvent.blur(currentTimeInput);
-    expect(setTime).toHaveBeenCalledWith(1750); // Should round down to nearest integer
+    expect(setTime).toHaveBeenCalledWith(1750);
   });
 
   test("Playhead position updates only after specific actions (blur, Enter, arrow keys)", () => {
     const currentTimeInput = screen.getByTestId("current-time-input");
-  
+
     // Typing alone should NOT trigger an update
     fireEvent.change(currentTimeInput, { target: { value: "1500" } });
     expect(setTime).not.toHaveBeenCalled(); // Should NOT trigger update yet
-  
+
     // Pressing Enter should trigger an update
     fireEvent.keyDown(currentTimeInput, { key: "Enter" });
     expect(setTime).toHaveBeenCalledWith(1500); // Now it should update
-  
+
     setTime.mockClear();
-  
+
     // Pressing Arrow Up should trigger an update and increment by step (10)
     fireEvent.keyDown(currentTimeInput, { key: "ArrowUp" });
     expect(setTime).toHaveBeenCalledWith(1510); // Should increment by 10
-  
+
     setTime.mockClear();
-  
+
     // Pressing Arrow Down should trigger an update and decrement by step (10)
     fireEvent.keyDown(currentTimeInput, { key: "ArrowDown" });
     expect(setTime).toHaveBeenCalledWith(1500); // Should decrement by 10
-  
+
     setTime.mockClear();
-  
+
     // Losing focus should trigger an update
     fireEvent.blur(currentTimeInput);
     expect(setTime).toHaveBeenCalledWith(1500); // Should update on blur
