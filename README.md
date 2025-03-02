@@ -1,8 +1,8 @@
-# Phase Timeline Challenge
+# Phase Timeline Challenge Submission
 
-## Overview
+<!-- ## Overview -->
 
-Implement interactive features for a Timeline component. We will provide a basic Timeline component scaffold, and your task is to implement the functionality that meets the user behavior requirements outlined below.
+<!-- Implement interactive features for a Timeline component. We will provide a basic Timeline component scaffold, and your task is to implement the functionality that meets the user behavior requirements outlined below.
 
 ![component-overview](./readme-assets/component-overview.jpg)
 
@@ -17,9 +17,9 @@ Implement interactive features for a Timeline component. We will provide a basic
 - **Track List**: The component that displays and manages multiple Tracks.
 - **Keyframe**: A marked point on the Timeline representing a significant event, change, or state.
 - **Keyframe List**: The component that shows the Keyframes across all Tracks, synchronized with the Ruler.
-- **Segment**: The visual representation of the Timeline's duration in the Keyframe List.
+- **Segment**: The visual representation of the Timeline's duration in the Keyframe List. -->
 
-## User Behavior Requirements
+## User Behavior Requirements Test
 
 ### 1. Number Input Field
 
@@ -38,8 +38,6 @@ Implement interactive features for a Timeline component. We will provide a basic
 #### Behavior
 
 ![Number Input Field Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/01-input-test.gif?raw=true)
-
-
 
 - [x] The input field displays the current value
 - [x] The displayed value updates immediately while typing, but `onChange` is not triggered until input is confirmed
