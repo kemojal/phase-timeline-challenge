@@ -3,10 +3,12 @@ import { PlayControls } from "../PlayControls";
 
 describe("PlayControls Component", () => {
   let setTime: jest.Mock;
+  let setDuration: jest.Mock;
 
   beforeEach(() => {
     setTime = jest.fn();
-    render(<PlayControls time={2000} setTime={setTime} />);
+    setDuration = jest.fn();
+    render(<PlayControls time={2000} setTime={setTime} duration={2000} setDuration={setDuration} />);
   });
 
   test("Current Time is always between 0ms and Duration", () => {
