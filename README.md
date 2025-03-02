@@ -101,9 +101,8 @@ Interface
 | Prop | Type | Description |
 | -------------- | --------------------------- | ------------------------------ |
 | `trackListRef` | `RefObject<HTMLDivElement>` | Ref for scroll synchronization |
-| `time` | `number` | Current time value in milliseconds |
-| `setTime` | `(time: number) => void` | Callback to update the current time |
-| `duration` | `number` | Total duration in milliseconds |
+| `keyframeListRef` | `RefObject<HTMLDivElement>` | Ref for scroll synchronization with Keyframe List |
+
 
 ![Track List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/04-track-list-test.gif?raw=true)
 
