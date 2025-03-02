@@ -1,6 +1,7 @@
 import { render, fireEvent, screen } from "@testing-library/react";
 import { KeyframeList } from "../KeyframeList";
 import { createRef, RefObject } from "react";
+import { Segment } from "../Segment";
 
 describe("KeyframeList Component", () => {
   let keyframeListRef: RefObject<HTMLDivElement>;
@@ -63,13 +64,19 @@ describe("KeyframeList Component", () => {
     expect(ruler.scrollLeft).toBe(200);
   });
 
-  test("Segment length visually represents the total duration", () => {
-    const segments = screen.getAllByTestId("segment");
-    segments.forEach((segment) => {
-      expect(segment.firstChild).toHaveStyle(`width: 1000px`);
-    });
-  });
 
   
+
+});
+
+
+
+describe("Segment Component", () => {
+    test("segment length visually represents duration (1ms = 1px)", () => {
+        render(<Segment duration={500} />);
+        const segment = screen.getByTestId("segment");
+    
+        expect(segment.firstChild).toHaveStyle("width: 500px");
+      });
 
 });
