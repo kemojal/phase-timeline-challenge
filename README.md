@@ -19,6 +19,21 @@
 - **Keyframe List**: The component that shows the Keyframes across all Tracks, synchronized with the Ruler.
 - **Segment**: The visual representation of the Timeline's duration in the Keyframe List. -->
 
+## Tests files and folders
+
+
+- `src/Timeline/__tests__/Playhead.test.tsx` - Tests for the Playhead component
+- `src/Timeline/__tests__/KeyframeList.test.tsx` - Tests for the Keyframe List component
+- `src/Timeline/__tests__/TrackList.test.tsx` - Tests for the Track List component
+- `src/Timeline/__tests__/Timeline.test.tsx` - Tests for the Timeline component
+- `src/Timeline/__tests__/Ruler.test.tsx` - Tests for the Ruler component
+- `src/Timeline/__tests__/Keyframe.test.tsx` - Tests for the Keyframe component
+- `src/Timeline/__tests__/Track.test.tsx` - Tests for the Track component
+- `src/Timeline/__tests__/Segment.test.tsx` - Tests for the Segment component
+- `src/Timeline/__tests__/TimelineContext.test.tsx` - Tests for the Timeline Context component
+- `src/Timeline/__tests__/TimelineProvider.test.tsx` - Tests for 
+  
+
 ## User Behavior Requirements
 
 ### 1. Number Input Field
@@ -106,7 +121,6 @@ Interface
 
 ![Track List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/04-track-list-test.gif?raw=true)
 
-<!-- https://github.com/user-attachments/assets/94b5e2c8-ef32-488e-97e4-d53036bbf2f7 -->
 
 Behavior test
 
@@ -142,7 +156,7 @@ Interface
 
 ![Playhead Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/06-playhead-test.gif?raw=true)
 
-<!-- https://github.com/user-attachments/assets/3940cd0d-dd9d-4331-9172-592462ad65d3 -->
+
 
 Behavior test
 
