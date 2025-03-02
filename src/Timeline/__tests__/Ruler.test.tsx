@@ -84,4 +84,27 @@ describe("Ruler Component", () => {
     // Restore the original method
     ruler.getBoundingClientRect = originalGetBoundingClientRect;
   });
+
+  test('mousemove without button pressed should not update time', () => {
+    const setTimeMock = jest.fn();
+    const duration = 1000;
+    const rulerRef = { current: document.createElement('div') };
+    
+    render(
+      <Ruler 
+        setTime={setTimeMock} 
+        duration={duration} 
+        rulerRef={rulerRef} 
+      />
+    );
+    
+    const ruler = screen.getByTestId('ruler');
+    
+    // Simulate mousemove without mousedown first
+    fireEvent.mouseMove(ruler, { clientX: 216, buttons: 0 });
+    
+    // setTime should not be called
+    expect(setTimeMock).not.toHaveBeenCalled();
+  });
+
 });
