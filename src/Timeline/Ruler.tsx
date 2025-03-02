@@ -31,6 +31,39 @@ export const Ruler = ({ rulerRef }: RulerProps) => {
     setTime(Math.max(0, roundedTime));
   };
 
+  const renderMarkers = () => {
+    const markers = [];
+    const totalMarkers = Math.ceil(duration / 10); // Every 10px is 10ms
+
+    for (let i = 0; i < totalMarkers; i++) {
+      const isMajor = i % 10 === 0; // Major marker every 100ms (100px)
+      const isSecond = i % 100 === 0; // Second marker every 1000ms (1000px)
+      const position = i * 10;
+
+      markers.push(
+        <div
+          key={i}
+          className={`absolute ${
+            isSecond
+              ? "h-6 border-l-2 border-white/60"
+              : isMajor
+              ? "h-3 border-l border-white/40"
+              : "h-2 border-l border-white/20"
+          }`}
+          style={{ left: `${position}px` }}
+        >
+          {isSecond && (
+            <div className="absolute left-1 -top-5 text-xs text-white/60">
+              {i / 100}s
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return markers;
+  };
+
   return (
     <div
       ref={rulerRef}
@@ -42,8 +75,10 @@ export const Ruler = ({ rulerRef }: RulerProps) => {
       <div
         style={{ width: `${duration}px` }}
         data-testid="ruler-bar"
-        className="h-6 rounded-md bg-white/25"
-      ></div>
+        className="relative h-6 rounded-md bg-white/10"
+      >
+        {renderMarkers()}
+      </div>
     </div>
   );
 };
