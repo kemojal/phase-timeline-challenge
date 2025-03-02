@@ -22,17 +22,17 @@
 ## Tests files and folders
 
 
-- `src/Timeline/__tests__/Playhead.test.tsx` - Tests for the Playhead component
+- `src/NumberInput/__tests__/index.test.tsx` - Tests for the Number Input component
+- `src/Timeline/__tests__/PlayControls.test.tsx` - Tests for the PlayControls component
+- `src/Timeline/__tests__/Ruler.test.tsx` - Tests for the 
+  Ruler component
+- `src/Timeline/__tests__/TrackList.test.tsx` - Tests for the 
+- Track List component
 - `src/Timeline/__tests__/KeyframeList.test.tsx` - Tests for the Keyframe List component
-- `src/Timeline/__tests__/TrackList.test.tsx` - Tests for the Track List component
-- `src/Timeline/__tests__/Timeline.test.tsx` - Tests for the Timeline component
-- `src/Timeline/__tests__/Ruler.test.tsx` - Tests for the Ruler component
-- `src/Timeline/__tests__/Keyframe.test.tsx` - Tests for the Keyframe component
-- `src/Timeline/__tests__/Track.test.tsx` - Tests for the Track component
-- `src/Timeline/__tests__/Segment.test.tsx` - Tests for the Segment component
-- `src/Timeline/__tests__/TimelineContext.test.tsx` - Tests for the Timeline Context component
-- `src/Timeline/__tests__/TimelineProvider.test.tsx` - Tests for 
-  
+- `src/Timeline/__tests__/Playhead.test.tsx` - Tests for the Playhead component component
+
+
+
 
 ## User Behavior Requirements
 
