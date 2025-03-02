@@ -176,15 +176,4 @@ Behavior
 - Pay attention to user experience and interface design
 - Write clean, well-documented, and maintainable code
 
-## Important Notes
 
-⚠️ **Warning**: Do not change any `data-testid` attribute names in the provided components. These are used for automated assessment of your assignment. Modifying these names may result in failing the assessment criteria.
-
-## Submission
-
-- Share your code repository (GitHub or GitLab) containing the implemented solution
-- Ensure the repository includes all necessary code, tests, and documentation
-- Provide any additional setup or running instructions in the repository's README file
-- Be prepared to answer follow-up questions about your implementation if requested
-
-Good luck with the Phase Timeline Challenge!
