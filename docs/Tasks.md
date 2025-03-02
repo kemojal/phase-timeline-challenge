@@ -25,7 +25,7 @@
   - [x] Add proper TypeScript types
   - [x] Write tests
 - [x] Implement `useTimeControl` hook
-  - [ ] Extract time/duration logic
+  - [x] Extract time/duration logic
   - [ ] Add validation and constraints
   - [ ] Write tests
 

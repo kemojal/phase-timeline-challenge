@@ -63,6 +63,12 @@ yarn test --coverage
 - `src/Timeline/__tests__/KeyframeList.test.tsx` - Tests for the Keyframe List component
 - `src/Timeline/__tests__/Playhead.test.tsx` - Tests for the Playhead component component
 
+## hooks tests files and folders
+
+- `src/hooks/__tests__/useTimeControl.test.tsx` - Tests for the useTimeControl hook
+- `src/hooks/__tests__/useSyncScroll.test.tsx` - Tests for the useSyncScroll hook
+
+
 ### Test Results
 
 |                                                             Number Input                                                             |                                                              Play Controls                                                              |                                                                     Ruler                                                                     |

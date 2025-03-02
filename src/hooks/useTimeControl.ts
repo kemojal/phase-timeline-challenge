@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useTimelineStore } from "../stores/timelineStore";
 
-interface TimeControlOptions {
+export interface TimeControlOptions {
   /** Minimum allowed time value in milliseconds */
   minTime?: number;
   /** Maximum allowed time value (defaults to duration) */
@@ -53,8 +53,8 @@ export function useTimeControl(
   const {
     minTime = 0,
     maxTime: maxTimeOption,
-    minDuration = 0,
-    maxDuration = Number.MAX_SAFE_INTEGER,
+    minDuration = 100,
+    maxDuration = 6000,
   } = options;
 
   const time = useTimelineStore((state) => state.time);
@@ -75,7 +75,7 @@ export function useTimeControl(
           : maxTime;
       return Math.max(minTime, Math.min(newTime, effectiveMaxTime));
     },
-    [minTime, maxTime, maxTimeOption]
+    [minTime, maxTime, maxTimeOption, duration]
   );
 
   // Validate and clamp duration value
@@ -89,9 +89,12 @@ export function useTimeControl(
   // Time control actions
   const setTime = useCallback(
     (newTime: number) => {
-      setStoreTime(validateTime(newTime));
+      const validTime = validateTime(newTime);
+      if (validTime !== time) {
+        setStoreTime(validTime);
+      }
     },
-    [setStoreTime, validateTime]
+    [setStoreTime, validateTime, time]
   );
 
   const setDuration = useCallback(
