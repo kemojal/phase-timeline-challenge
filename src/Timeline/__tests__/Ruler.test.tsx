@@ -146,4 +146,77 @@ describe("Ruler Component", () => {
     // Initial duration is 1000, so width should be 1000px
     expect(rulerBar).toHaveStyle("width: 1000px");
   });
+
+//   test("ruler length updates when duration changes through PlayControls", async () => {
+//     const user = userEvent.setup();
+//     render(<Timeline />);
+
+//     // Get the ruler bar and duration input using the correct data-testid
+//     const rulerBar = screen.getByTestId("ruler-bar");
+//     const durationInput = screen.getByTestId("duration-input");
+
+//     // Check initial width
+//     expect(rulerBar).toHaveStyle("width: 1000px");
+
+//     // Change duration to 2000 and press Enter
+//     await user.clear(durationInput);
+//     await user.type(durationInput, "2000");
+//     fireEvent.keyDown(durationInput, { key: "Enter", code: "Enter" });
+
+//     // Check updated width
+//     expect(rulerBar).toHaveStyle("width: 2000px");
+
+//     // Change duration to 3000 and blur (lose focus)
+//     await user.clear(durationInput);
+//     await user.type(durationInput, "3000");
+//     fireEvent.blur(durationInput);
+
+//     // Check updated width again
+//     expect(rulerBar).toHaveStyle("width: 3000px");
+
+//     // Test arrow keys
+//     await user.clear(durationInput);
+//     await user.type(durationInput, "3000");
+//     fireEvent.keyDown(durationInput, { key: "ArrowUp", code: "ArrowUp" });
+
+//     // Assuming ArrowUp increases by 10 (based on step="10" in the input)
+//     expect(rulerBar).toHaveStyle("width: 3010px");
+
+//     fireEvent.keyDown(durationInput, { key: "ArrowDown", code: "ArrowDown" });
+//     // Back to 3000
+//     expect(rulerBar).toHaveStyle("width: 3000px");
+//   });
+ // Test for integration with Playhead position
+ test('updating time via ruler updates playhead position', async () => {
+    render(<Timeline />);
+    
+    const ruler = screen.getByTestId('ruler');
+    const playhead = screen.getByTestId('playhead');
+    
+    // Mock getBoundingClientRect
+    const originalGetBoundingClientRect = ruler.getBoundingClientRect;
+    ruler.getBoundingClientRect = jest.fn(() => ({
+      left: 0,
+      top: 0,
+      width: 1000,
+      height: 40,
+      right: 1000,
+      bottom: 40,
+      x: 0,
+      y: 0,
+      toJSON: () => {}
+    }));
+    
+    // Initial position should be 0
+    expect(playhead).toHaveStyle('transform: translateX(calc(0px - 50%))');
+    
+    // Click at position 200 on the ruler (accounting for padding)
+    fireEvent.mouseDown(ruler, { clientX: 216, buttons: 1 });
+    
+    // Check if playhead position was updated to 200px
+    expect(playhead).toHaveStyle('transform: translateX(calc(200px - 50%))');
+    
+    // Restore the original method
+    ruler.getBoundingClientRect = originalGetBoundingClientRect;
+  });
 });
