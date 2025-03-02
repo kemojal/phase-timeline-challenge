@@ -19,7 +19,7 @@
 - **Keyframe List**: The component that shows the Keyframes across all Tracks, synchronized with the Ruler.
 - **Segment**: The visual representation of the Timeline's duration in the Keyframe List. -->
 
-## User Behavior Requirements Test
+## User Behavior Requirements
 
 ### 1. Number Input Field
 
@@ -65,7 +65,11 @@ Interface
 | `duration`    | `number`                     | Total duration in milliseconds      |
 | `setDuration` | `(duration: number) => void` | Callback to update the duration     |
 
-https://github.com/user-attachments/assets/9a669854-e0c5-4950-8364-10fe0b40d16b
+
+[Play Controls Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/02-play-controls-test.gif?raw=true)
+
+
+<!-- https://github.com/user-attachments/assets/9a669854-e0c5-4950-8364-10fe0b40d16b -->
 
 Behavior
 
@@ -88,7 +92,11 @@ Interface
 
 Behavior
 
-https://github.com/user-attachments/assets/42190ade-f708-45a1-8168-2be779c66390
+
+[Ruler Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/03-ruler-test.gif?raw=true)
+
+
+<!-- https://github.com/user-attachments/assets/42190ade-f708-45a1-8168-2be779c66390 -->
 
 - [x] Clicking or dragging on the Ruler updates the Current Time and Playhead position
 - [x] Horizontal scrolling of the Ruler is synchronized with the Keyframe List
@@ -105,7 +113,11 @@ Interface
 | `setTime` | `(time: number) => void` | Callback to update the current time |
 | `duration` | `number` | Total duration in milliseconds |
 
-https://github.com/user-attachments/assets/94b5e2c8-ef32-488e-97e4-d53036bbf2f7
+
+
+[Track List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/04-tract-list-test.gif?raw=true)
+
+<!-- https://github.com/user-attachments/assets/94b5e2c8-ef32-488e-97e4-d53036bbf2f7 -->
 
 Behavior
 
@@ -121,7 +133,10 @@ Interface
 | `rulerRef` | `RefObject<HTMLDivElement>` | Ref for horizontal scroll synchronization |
 | `trackListRef` | `RefObject<HTMLDivElement>` | Ref for vertical scroll synchronization |
 
-https://github.com/user-attachments/assets/99826161-f821-4e4d-b9a8-b59c16d9894e
+
+[Keyframe List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/05-keyframe-list-test.gif?raw=true)
+
+<!-- https://github.com/user-attachments/assets/99826161-f821-4e4d-b9a8-b59c16d9894e -->
 
 Behavior
 
@@ -139,7 +154,10 @@ Interface
 | `scrollLeft` | `number` | Current horizontal scroll position |
 | `duration` | `number` | Total duration in milliseconds |
 
-https://github.com/user-attachments/assets/3940cd0d-dd9d-4331-9172-592462ad65d3
+
+[Playhead Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/06-playhead-test.gif?raw=true)
+
+<!-- https://github.com/user-attachments/assets/3940cd0d-dd9d-4331-9172-592462ad65d3 -->
 
 Behavior
 
