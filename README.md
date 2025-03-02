@@ -30,23 +30,13 @@
 - `src/Timeline/__tests__/KeyframeList.test.tsx` - Tests for the Keyframe List component
 - `src/Timeline/__tests__/Playhead.test.tsx` - Tests for the Playhead component component
 
-<table cellspacing="0" cellpadding="0" style="width:100%; text-align: center;">
-  <tr>
-    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/01-number-input.png?raw=true" width="100"></td>
-    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/02-playcontrol.png?raw=true" width="100"></td>
-    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/03-ruler.png?raw=true" width="100"></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/04-tracklist.png?raw=true" width="100"></td>
-    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/05-1-keyframelist.png?raw=true" width="100"></td>
-    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/05-1-keyframesegment.png?raw=true" width="100"></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/06-playhead.png?raw=true" width="100"></td>
-    
-  </tr>
-  </table>
+### Test Results
 
+|                                                             Number Input                                                             |                                                              Play Controls                                                              |                                                                     Ruler                                                                     |
+| :----------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: |
+| ![Number Input](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/01-number-input.png?raw=true) |  ![Play Controls](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/02-playcontrol.png?raw=true)   |            ![Ruler](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/03-ruler.png?raw=true)             |
+|   ![Track List](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/04-tracklist.png?raw=true)    | ![Keyframe List](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/05-1-keyframelist.png?raw=true) | ![Keyframe Segment](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/05-1-keyframesegment.png?raw=true) |
+|     ![Playhead](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/test-results/06-playhead.png?raw=true)     |                                                                                                                                         |                                                                                                                                               |
 
 ## User Behavior Requirements
 
