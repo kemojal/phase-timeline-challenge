@@ -1,12 +1,12 @@
 import { MouseEvent, RefObject } from "react";
-import { useTimelineStore } from "../stores/timelineStore";
+import { useTimeControl } from "../hooks/useTimeControl";
 
 interface RulerProps {
   rulerRef: RefObject<HTMLDivElement>;
 }
 
 export const Ruler = ({ rulerRef }: RulerProps) => {
-  const { setTime, duration } = useTimelineStore();
+  const { setTime, duration } = useTimeControl();
   let padding = 16;
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -27,11 +27,10 @@ export const Ruler = ({ rulerRef }: RulerProps) => {
 
     // Round to the nearest 10
     const roundedTime = Math.round(totalX / 10) * 10;
-    // Ensure we don't go below 0
-    const newTime = Math.max(0, roundedTime);
-
-    setTime(newTime);
+    // Ensure we don't go below 0 and validate through hook
+    setTime(Math.max(0, roundedTime));
   };
+
   return (
     <div
       ref={rulerRef}

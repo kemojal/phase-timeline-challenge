@@ -1,43 +1,30 @@
 import { useCallback } from "react";
 import NumberInput from "../NumberInput";
-import { useTimelineStore } from "../stores/timelineStore";
+import { useTimeControl } from "../hooks/useTimeControl";
 
 export const PlayControls = () => {
-  const { time, setTime, duration, setDuration } = useTimelineStore();
-
-  // Ensure time does not exceed duration on mount
-  if (time > duration) {
-    setTime(duration);
-  }
+  const { time, duration, setTime, setDuration } = useTimeControl({
+    minTime: 0,
+    minDuration: 100,
+    maxDuration: 6000,
+  });
 
   const onTimeChange = useCallback(
     (newTime: number) => {
-      // First clamp to duration
-      const clampedTime = Math.min(newTime, duration);
-
-      // Then ensure it's within bounds and multiple of 10
-      const normalizedTime = Math.max(0, Math.round(clampedTime / 10) * 10);
-
-      // Always call setTime with the normalized value
+      // Normalize to multiples of 10
+      const normalizedTime = Math.round(newTime / 10) * 10;
       setTime(normalizedTime);
     },
-    [setTime, duration]
+    [setTime]
   );
 
   const onDurationChange = useCallback(
     (newDuration: number) => {
-      // Round to nearest 10ms and clamp between 100ms and 6000ms
-      const roundedDuration = Math.round(newDuration / 10) * 10;
-      const normalizedDuration = Math.max(100, Math.min(6000, roundedDuration));
-
+      // Normalize to multiples of 10
+      const normalizedDuration = Math.round(newDuration / 10) * 10;
       setDuration(normalizedDuration);
-
-      // Always ensure time is within bounds when duration changes
-      if (time > normalizedDuration) {
-        setTime(normalizedDuration);
-      }
     },
-    [time, setTime, setDuration]
+    [setDuration]
   );
 
   const handleKeyDown = useCallback(

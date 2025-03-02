@@ -1,11 +1,11 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Ruler } from "../Ruler";
 import { Timeline } from "../Timeline";
-import * as timelineStore from "../../stores/timelineStore";
+import * as timeControlHook from "../../hooks/useTimeControl";
 
-// Mock the Zustand store
-jest.mock("../../stores/timelineStore", () => ({
-  useTimelineStore: jest.fn(),
+// Mock the useTimeControl hook
+jest.mock("../../hooks/useTimeControl", () => ({
+  useTimeControl: jest.fn(),
 }));
 
 describe("Ruler Component", () => {
@@ -15,13 +15,20 @@ describe("Ruler Component", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    // Set up mock implementation for useTimelineStore
-    jest.spyOn(timelineStore, "useTimelineStore").mockImplementation(() => ({
+    // Set up mock implementation for useTimeControl
+    jest.spyOn(timeControlHook, "useTimeControl").mockImplementation(() => ({
       time: 0,
       duration,
       setTime: setTimeMock,
-      scrollLeft: 0,
-      setScrollLeft: jest.fn(),
+      setDuration: jest.fn(),
+      isAtStart: true,
+      isAtEnd: false,
+      canMoveForward: jest.fn(),
+      canMoveBackward: jest.fn(),
+      moveForward: jest.fn(),
+      moveBackward: jest.fn(),
+      jumpToStart: jest.fn(),
+      jumpToEnd: jest.fn(),
     }));
   });
 
@@ -133,48 +140,60 @@ describe("Ruler Component", () => {
   });
 
   test("ruler length visually represents the total duration with 1ms = 1px ratio", () => {
-    // Set up initial store mock with 1000ms duration
-    const mockStore = {
+    // Set up initial mock with 1000ms duration
+    const mockHook = {
       time: 0,
       duration: 1000,
       setTime: jest.fn(),
-      scrollLeft: 0,
-      setScrollLeft: jest.fn(),
+      setDuration: jest.fn(),
+      isAtStart: true,
+      isAtEnd: false,
+      canMoveForward: jest.fn(),
+      canMoveBackward: jest.fn(),
+      moveForward: jest.fn(),
+      moveBackward: jest.fn(),
+      jumpToStart: jest.fn(),
+      jumpToEnd: jest.fn(),
     };
-    jest
-      .spyOn(timelineStore, "useTimelineStore")
-      .mockImplementation(() => mockStore);
+
+    jest.spyOn(timeControlHook, "useTimeControl").mockImplementation(() => mockHook);
 
     const { rerender } = render(<Ruler rulerRef={rulerRef} />);
     const rulerBar = screen.getByTestId("ruler-bar");
     expect(rulerBar).toHaveStyle("width: 1000px");
 
     // Update duration to 2000ms
-    mockStore.duration = 2000;
+    mockHook.duration = 2000;
     rerender(<Ruler rulerRef={rulerRef} />);
     expect(rulerBar).toHaveStyle("width: 2000px");
   });
 
   test("ruler length updates when duration changes through PlayControls", () => {
-    // Set up initial store mock with 1000ms duration
-    const mockStore = {
+    // Set up initial mock with 1000ms duration
+    const mockHook = {
       time: 0,
       duration: 1000,
       setTime: jest.fn(),
-      scrollLeft: 0,
-      setScrollLeft: jest.fn(),
       setDuration: jest.fn().mockImplementation((newDuration) => {
-        // Update the store's duration value
-        mockStore.duration = newDuration;
+        // Update the hook's duration value
+        mockHook.duration = newDuration;
         // Trigger a re-render by updating the mock implementation
-        jest.spyOn(timelineStore, "useTimelineStore").mockImplementation(() => ({
-          ...mockStore
+        jest.spyOn(timeControlHook, "useTimeControl").mockImplementation(() => ({
+          ...mockHook
         }));
       }),
+      isAtStart: true,
+      isAtEnd: false,
+      canMoveForward: jest.fn(),
+      canMoveBackward: jest.fn(),
+      moveForward: jest.fn(),
+      moveBackward: jest.fn(),
+      jumpToStart: jest.fn(),
+      jumpToEnd: jest.fn(),
     };
 
-    // Initial store setup
-    jest.spyOn(timelineStore, "useTimelineStore").mockImplementation(() => mockStore);
+    // Initial hook setup
+    jest.spyOn(timeControlHook, "useTimeControl").mockImplementation(() => mockHook);
 
     const { rerender } = render(<Timeline />);
 

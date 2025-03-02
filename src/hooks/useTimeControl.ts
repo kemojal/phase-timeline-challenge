@@ -67,10 +67,15 @@ export function useTimeControl(
 
   // Validate and clamp time value
   const validateTime = useCallback(
-    (newTime: number): number => {
-      return Math.max(minTime, Math.min(newTime, maxTime));
+    (newTime: number, newDuration?: number): number => {
+      // If a new duration is provided, use it as the max time
+      const effectiveMaxTime =
+        newDuration !== undefined
+          ? Math.min(maxTimeOption ?? newDuration, newDuration)
+          : maxTime;
+      return Math.max(minTime, Math.min(newTime, effectiveMaxTime));
     },
-    [minTime, maxTime]
+    [minTime, maxTime, maxTimeOption]
   );
 
   // Validate and clamp duration value
@@ -93,8 +98,13 @@ export function useTimeControl(
     (newDuration: number) => {
       const validDuration = validateDuration(newDuration);
       setStoreDuration(validDuration);
+
       // Ensure time is still valid with new duration
-      setStoreTime(validateTime(time));
+      // Pass the new duration to validateTime to use as max
+      const validTime = validateTime(time, validDuration);
+      if (validTime !== time) {
+        setStoreTime(validTime);
+      }
     },
     [setStoreDuration, validateDuration, setStoreTime, validateTime, time]
   );

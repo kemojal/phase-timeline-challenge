@@ -1,10 +1,10 @@
 import { render, fireEvent, screen } from "@testing-library/react";
 import { PlayControls } from "../PlayControls";
-import { useTimelineStore } from "../../stores/timelineStore";
+import * as timeControlHook from "../../hooks/useTimeControl";
 
-// Mock the Zustand store
-jest.mock("../../stores/timelineStore", () => ({
-  useTimelineStore: jest.fn(),
+// Mock the useTimeControl hook
+jest.mock("../../hooks/useTimeControl", () => ({
+  useTimeControl: jest.fn(),
 }));
 
 describe("PlayControls Component", () => {
@@ -15,12 +15,20 @@ describe("PlayControls Component", () => {
     mockSetTime = jest.fn();
     mockSetDuration = jest.fn();
 
-    // Setup mock store
-    (useTimelineStore as jest.Mock).mockImplementation(() => ({
+    // Setup mock hook
+    jest.spyOn(timeControlHook, "useTimeControl").mockImplementation(() => ({
       time: 2000,
       setTime: mockSetTime,
       duration: 2000,
       setDuration: mockSetDuration,
+      isAtStart: false,
+      isAtEnd: true,
+      canMoveForward: jest.fn(),
+      canMoveBackward: jest.fn(),
+      moveForward: jest.fn(),
+      moveBackward: jest.fn(),
+      jumpToStart: jest.fn(),
+      jumpToEnd: jest.fn(),
     }));
 
     render(<PlayControls />);
@@ -46,7 +54,7 @@ describe("PlayControls Component", () => {
     fireEvent.change(durationInput, { target: { value: "1500" } });
     fireEvent.blur(durationInput);
 
-    expect(mockSetTime).toHaveBeenCalledWith(1500);
+    expect(mockSetDuration).toHaveBeenCalledWith(1500);
   });
 
   test("Duration is always between 100ms and 6000ms", () => {
@@ -55,26 +63,22 @@ describe("PlayControls Component", () => {
     // Test upper bound - time shouldn't change since 2000 < 6000
     fireEvent.change(durationInput, { target: { value: "7000" } });
     fireEvent.blur(durationInput);
-    expect(mockSetTime).not.toHaveBeenCalled();
+    expect(mockSetDuration).toHaveBeenCalledWith(6000);
 
-    mockSetTime.mockClear();
-
-    // Test lower bound - time should change since 2000 > 100
+    // Test lower bound
     fireEvent.change(durationInput, { target: { value: "50" } });
     fireEvent.blur(durationInput);
-    expect(mockSetTime).toHaveBeenCalledWith(100);
+    expect(mockSetDuration).toHaveBeenCalledWith(100);
   });
 
   test("Current Time and Duration round to nearest multiple of 10ms", () => {
     const durationInput = screen.getByTestId("duration-input");
     const currentTimeInput = screen.getByTestId("current-time-input");
 
-    // Duration rounding - time shouldn't change since 2000 < 5980
+    // Duration rounding
     fireEvent.change(durationInput, { target: { value: "5983" } });
     fireEvent.blur(durationInput);
-    expect(mockSetTime).not.toHaveBeenCalled();
-
-    mockSetTime.mockClear();
+    expect(mockSetDuration).toHaveBeenCalledWith(5980);
 
     // Time rounding
     fireEvent.change(currentTimeInput, { target: { value: "999" } });
@@ -86,26 +90,20 @@ describe("PlayControls Component", () => {
     const durationInput = screen.getByTestId("duration-input");
     const currentTimeInput = screen.getByTestId("current-time-input");
 
-    // Negative duration - time should change since 2000 > 100
+    // Negative duration
     fireEvent.change(durationInput, { target: { value: "-500" } });
     fireEvent.blur(durationInput);
-    expect(mockSetTime).toHaveBeenCalledWith(100);
-
-    mockSetTime.mockClear();
+    expect(mockSetDuration).toHaveBeenCalledWith(100);
 
     // Negative time
     fireEvent.change(currentTimeInput, { target: { value: "-200" } });
     fireEvent.blur(currentTimeInput);
     expect(mockSetTime).toHaveBeenCalledWith(0);
 
-    mockSetTime.mockClear();
-
-    // Decimal duration - time shouldn't change since 2000 < 2500
+    // Decimal duration
     fireEvent.change(durationInput, { target: { value: "2500.5" } });
     fireEvent.blur(durationInput);
-    expect(mockSetTime).not.toHaveBeenCalled();
-
-    mockSetTime.mockClear();
+    expect(mockSetDuration).toHaveBeenCalledWith(2500);
 
     // Decimal time
     fireEvent.change(currentTimeInput, { target: { value: "1750.9" } });
