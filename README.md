@@ -53,15 +53,15 @@
 
 #### Interface
 
-| Prop          | Type                             | Description                                                        |
-| ------------- | -------------------------------- | ------------------------------------------------------------------ |
-| `value`       | `number`                         | The current value of the input field                               |
-| `onChange`    | `(value: number) => void`        | Callback function called when the value changes                    |
-| `min`         | `number`                         | Minimum allowed value                                              |
-| `max`         | `number`                         | Maximum allowed value                                              |
-| `step`        | `number`                         | Step value for increment/decrement operations                      |
-| `onKeyDown`   | `(event: KeyboardEvent) => void` | Optional callback for handling keyboard events                     |
-| `data-testid` | `string`                         | Optional test ID for testing purposes (defaults to "number-input") |
+| Prop          | Type                             | Required | Description                                                        |
+| :------------ | :------------------------------- | :------: | :----------------------------------------------------------------- |
+| `value`       | `number`                         | &#10004; | The current value of the input field                               |
+| `onChange`    | `(value: number) => void`        | &#10004; | Callback function called when the value changes                    |
+| `min`         | `number`                         | &#10004; | Minimum allowed value                                              |
+| `max`         | `number`                         | &#10004; | Maximum allowed value                                              |
+| `step`        | `number`                         | &#10004; | Step value for increment/decrement operations                      |
+| `onKeyDown`   | `(event: KeyboardEvent) => void` | &#8211;  | Optional callback for handling keyboard events                     |
+| `data-testid` | `string`                         | &#8211;  | Optional test ID for testing purposes (defaults to "number-input") |
 
 #### Behavior
 
@@ -84,14 +84,14 @@
 
 ### 2. Play Controls Behavior
 
-Interface
+#### Interface
 
-| Prop          | Type                         | Description                         |
-| ------------- | ---------------------------- | ----------------------------------- |
-| `time`        | `number`                     | Current time value in milliseconds  |
-| `setTime`     | `(time: number) => void`     | Callback to update the current time |
-| `duration`    | `number`                     | Total duration in milliseconds      |
-| `setDuration` | `(duration: number) => void` | Callback to update the duration     |
+| Prop          | Type                         | Required | Description                         |
+| :------------ | :--------------------------- | :------: | :---------------------------------- |
+| `time`        | `number`                     | &#10004; | Current time value in milliseconds  |
+| `setTime`     | `(time: number) => void`     | &#10004; | Callback to update the current time |
+| `duration`    | `number`                     | &#10004; | Total duration in milliseconds      |
+| `setDuration` | `(duration: number) => void` | &#10004; | Callback to update the duration     |
 
 ![Play Controls Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/02-play-controls-test.gif?raw=true)
 
@@ -106,15 +106,14 @@ Behavior Test Case
 
 ### 3. Ruler Behavior
 
-Interface
-| Prop | Type | Description |
-| ---------- | --------------------------- | ----------------------------------- |
-| `time` | `number` | Current time value in milliseconds |
-| `setTime` | `(time: number) => void` | Callback to update the current time |
-| `duration` | `number` | Total duration in milliseconds |
-| `rulerRef` | `RefObject<HTMLDivElement>` | Ref for scroll synchronization |
+#### Interface
 
-Behavior test
+| Prop       | Type                        | Required | Description                         |
+| :--------- | :-------------------------- | :------: | :---------------------------------- |
+| `time`     | `number`                    | &#10004; | Current time value in milliseconds  |
+| `setTime`  | `(time: number) => void`    | &#10004; | Callback to update the current time |
+| `duration` | `number`                    | &#10004; | Total duration in milliseconds      |
+| `rulerRef` | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization      |
 
 ![Ruler Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/03-ruler-test.gif?raw=true)
 
@@ -125,11 +124,12 @@ Behavior test
 
 ### 4. Track List Behavior
 
-Interface
-| Prop | Type | Description |
-| -------------- | --------------------------- | ------------------------------ |
-| `trackListRef` | `RefObject<HTMLDivElement>` | Ref for scroll synchronization |
-| `keyframeListRef` | `RefObject<HTMLDivElement>` | Ref for scroll synchronization with Keyframe List |
+#### Interface
+
+| Prop              | Type                        | Required | Description                                       |
+| :---------------- | :-------------------------- | :------: | :------------------------------------------------ |
+| `trackListRef`    | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization                    |
+| `keyframeListRef` | `RefObject<HTMLDivElement>` | &#10004; | Ref for scroll synchronization with Keyframe List |
 
 ![Track List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/04-track-list-test.gif?raw=true)
 
@@ -139,13 +139,14 @@ Behavior test
 
 ### 5. Keyframe List Behavior
 
-Interface
-| Prop | Type | Description |
-| ----------------- | --------------------------- | ----------------------------------------- |
-| `duration` | `number` | Total duration in milliseconds |
-| `keyframeListRef` | `RefObject<HTMLDivElement>` | Ref for horizontal scroll synchronization |
-| `rulerRef` | `RefObject<HTMLDivElement>` | Ref for horizontal scroll synchronization |
-| `trackListRef` | `RefObject<HTMLDivElement>` | Ref for vertical scroll synchronization |
+#### Interface
+
+| Prop              | Type                        | Required | Description                               |
+| :---------------- | :-------------------------- | :------: | :---------------------------------------- |
+| `duration`        | `number`                    | &#10004; | Total duration in milliseconds            |
+| `keyframeListRef` | `RefObject<HTMLDivElement>` | &#10004; | Ref for horizontal scroll synchronization |
+| `rulerRef`        | `RefObject<HTMLDivElement>` | &#10004; | Ref for horizontal scroll synchronization |
+| `trackListRef`    | `RefObject<HTMLDivElement>` | &#10004; | Ref for vertical scroll synchronization   |
 
 ![Keyframe List Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/05-keyframe-list-test.gif?raw=true)
 
@@ -158,12 +159,13 @@ Behavior test
 
 ### 6. Playhead Behavior
 
-Interface
-| Prop | Type | Description |
-| ------------ | -------- | ---------------------------------- |
-| `time` | `number` | Current time value in milliseconds |
-| `scrollLeft` | `number` | Current horizontal scroll position |
-| `duration` | `number` | Total duration in milliseconds |
+#### Interface
+
+| Prop         | Type     | Required | Description                        |
+| :----------- | :------- | :------: | :--------------------------------- |
+| `time`       | `number` | &#10004; | Current time value in milliseconds |
+| `scrollLeft` | `number` | &#10004; | Current horizontal scroll position |
+| `duration`   | `number` | &#10004; | Total duration in milliseconds     |
 
 ![Playhead Behavior Test](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/gifs/06-playhead-test.gif?raw=true)
 
