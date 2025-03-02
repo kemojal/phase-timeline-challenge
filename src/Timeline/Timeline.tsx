@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import {  useState } from "react";
 import { Playhead } from "./Playhead";
 import { Ruler } from "./Ruler";
 import { TrackList } from "./TrackList";
@@ -9,7 +9,7 @@ export const Timeline = () => {
   // FIXME: performance concerned
   const [time, setTime] = useState(0);
   const [ duration, setDuration ] = useState(1000);
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  // const scrollRef = useRef<HTMLDivElement | null>(null);
   
 
   return (
@@ -21,9 +21,9 @@ export const Timeline = () => {
       <PlayControls time={time} setTime={setTime} 
       duration={duration} setDuration={setDuration}
       />
-      <Ruler time={time} setTime={setTime} scrollRef={scrollRef} duration={duration} />
+      <Ruler time={time} setTime={setTime}  duration={duration} />
       <TrackList />
-      <KeyframeList/>
+      <KeyframeList duration={duration} />
       <Playhead time={time} />
     </div>
   );

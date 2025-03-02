@@ -1,16 +1,13 @@
-import { MouseEvent, RefObject, useRef } from "react";
+import { MouseEvent, useRef } from "react";
 
 interface RulerProps {
   time?: number;
   setTime: (time: number) => void;
-  scrollRef: RefObject<HTMLDivElement>;
   duration: number;
 }
 
 export const Ruler = ({
-  //  time,
   setTime,
-  // scrollRef,
   duration,
 }: RulerProps) => {
   const rulerRef = useRef<HTMLDivElement | null>(null);
@@ -53,30 +50,6 @@ export const Ruler = ({
     }
   };
 
-  // Generate time markers
-  const renderTimeMarkers = () => {
-    const markers = [];
-    const markerInterval = 100; // Every 100ms
-
-    for (let i = 0; i <= duration; i += markerInterval) {
-      markers.push(
-        <div
-          key={i}
-          className="absolute w-px h-3 bg-gray-400"
-          style={{ left: `${i}px` }}
-        >
-          {/* {i % 500 === 0 && (
-            <div className="absolute -top-4 text-xs text-gray-300 -translate-x-1/2">
-              {i}ms
-            </div>
-          )} */}
-        </div>
-      );
-    }
-
-    return markers;
-  };
-
   // TODO: implement mousedown and mousemove to update time and Playhead position
 
   return (
@@ -91,12 +64,8 @@ export const Ruler = ({
       <div
         style={{ width: `${duration}px` }}
         data-testid="ruler-bar"
-        className="flex relative flex-col gap-1 rounded-md"
-      >
-        <div className="w-full h-2 rounded-md bg-white/25"/>
-
-        <div>{renderTimeMarkers()}</div>
-      </div>
+        className="h-6 rounded-md bg-white/25"
+      ></div>
     </div>
   );
 };

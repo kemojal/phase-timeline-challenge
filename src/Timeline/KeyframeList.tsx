@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
 import { Segment } from "./Segment";
 
-// interface KeyframeListProps {
-//   scrollRef: React.RefObject<HTMLDivElement>;
-// }
+interface KeyframeListProps {
+  duration: number;
+}
 
-export const KeyframeList = () => {
+export const KeyframeList = ({ duration }: KeyframeListProps) => {
   const keyframeListRef = useRef<HTMLDivElement | null>(null);
   // TODO: implement scroll sync with `Ruler` and `TrackList`
 
@@ -34,17 +34,18 @@ export const KeyframeList = () => {
       ref={keyframeListRef}
       className="overflow-auto px-4 min-w-0"
       data-testid="keyframe-list"
+      style={{  minHeight: "100%" }}
     >
-      <Segment />
-      <Segment />
-      <Segment />
-      <Segment />
-      <Segment />
-      <Segment />
-      <Segment />
-      <Segment />
-      <Segment />
-      <Segment />
+      <Segment duration={duration}/>
+      <Segment duration={duration}/>
+      <Segment duration={duration}/>
+      <Segment duration={duration}/>
+      <Segment duration={duration}/>
+      <Segment duration={duration}/>
+      <Segment duration={duration}/>
+      <Segment duration={duration}/>
+      <Segment duration={duration}/>
+      <Segment duration={duration}/>
     </div>
   );
 };
