@@ -37,7 +37,7 @@ Implement interactive features for a Timeline component. We will provide a basic
 
 #### Behavior
 
-https://github.com/user-attachments/assets/8dd5ef2b-6b57-43dc-91b3-0d322d148781
+https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/01-input-test.gif
 
 - [x] The displayed value updates immediately while typing, but `onChange` is not triggered until input is confirmed
 - [x] Clicking outside the input field removes focus and changes the value
@@ -54,6 +54,7 @@ https://github.com/user-attachments/assets/8dd5ef2b-6b57-43dc-91b3-0d322d148781
 - [x] Invalid inputs (non-numeric) revert to the previous valid value
 
 ### 2. Play Controls Behavior
+
 Interface
 
 | Prop          | Type                         | Description                         |
@@ -65,7 +66,6 @@ Interface
 
 https://github.com/user-attachments/assets/9a669854-e0c5-4950-8364-10fe0b40d16b
 
-
 Behavior
 
 - [x] Current Time is always between `0ms` and the Duration
@@ -75,19 +75,15 @@ Behavior
 - [x] Current Time and Duration are always positive integers
 - [x] Playhead position updates only after specific actions on Current Time input (losing focus, pressing Enter, using arrow keys, or clicking up/down buttons)
 
-
-
-
-
 ### 3. Ruler Behavior
 
 Interface
-| Prop       | Type                        | Description                         |
+| Prop | Type | Description |
 | ---------- | --------------------------- | ----------------------------------- |
-| `time`     | `number`                    | Current time value in milliseconds  |
-| `setTime`  | `(time: number) => void`    | Callback to update the current time |
-| `duration` | `number`                    | Total duration in milliseconds      |
-| `rulerRef` | `RefObject<HTMLDivElement>` | Ref for scroll synchronization      |
+| `time` | `number` | Current time value in milliseconds |
+| `setTime` | `(time: number) => void` | Callback to update the current time |
+| `duration` | `number` | Total duration in milliseconds |
+| `rulerRef` | `RefObject<HTMLDivElement>` | Ref for scroll synchronization |
 
 Behavior
 
@@ -98,39 +94,31 @@ https://github.com/user-attachments/assets/42190ade-f708-45a1-8168-2be779c66390
 - [x] Ruler length visually represents the total Duration (`1ms = 1px`)
 - [x] Ruler length updates only after specific actions on Duration input (losing focus, pressing Enter, using arrow keys, or clicking up/down buttons)
 
-
-
-
-
 ### 4. Track List Behavior
 
 Interface
-| Prop           | Type                        | Description                    |
+| Prop | Type | Description |
 | -------------- | --------------------------- | ------------------------------ |
 | `trackListRef` | `RefObject<HTMLDivElement>` | Ref for scroll synchronization |
-| `time`         | `number`                    | Current time value in milliseconds  |
-| `setTime`      | `(time: number) => void`    | Callback to update the current time |
-| `duration`     | `number`                    | Total duration in milliseconds      |
+| `time` | `number` | Current time value in milliseconds |
+| `setTime` | `(time: number) => void` | Callback to update the current time |
+| `duration` | `number` | Total duration in milliseconds |
 
 https://github.com/user-attachments/assets/94b5e2c8-ef32-488e-97e4-d53036bbf2f7
 
-
 Behavior
+
 - [x] Vertical scrolling of the Track List is synchronized with the Keyframe List
-
-
-
 
 ### 5. Keyframe List Behavior
 
 Interface
-| Prop              | Type                        | Description                               |
+| Prop | Type | Description |
 | ----------------- | --------------------------- | ----------------------------------------- |
-| `duration`        | `number`                    | Total duration in milliseconds            |
+| `duration` | `number` | Total duration in milliseconds |
 | `keyframeListRef` | `RefObject<HTMLDivElement>` | Ref for horizontal scroll synchronization |
-| `rulerRef`        | `RefObject<HTMLDivElement>` | Ref for horizontal scroll synchronization |
-| `trackListRef`    | `RefObject<HTMLDivElement>` | Ref for vertical scroll synchronization   |
-
+| `rulerRef` | `RefObject<HTMLDivElement>` | Ref for horizontal scroll synchronization |
+| `trackListRef` | `RefObject<HTMLDivElement>` | Ref for vertical scroll synchronization |
 
 https://github.com/user-attachments/assets/99826161-f821-4e4d-b9a8-b59c16d9894e
 
@@ -141,20 +129,14 @@ Behavior
 - [x] Segment length visually represents the total Duration (`1ms = 1px`)
 - [x] Segment length updates only after specific actions on Duration input (losing focus, pressing Enter, using arrow keys, or clicking up/down buttons)
 
-
-
-
-
 ### 6. Playhead Behavior
 
 Interface
-| Prop         | Type     | Description                        |
+| Prop | Type | Description |
 | ------------ | -------- | ---------------------------------- |
-| `time`       | `number` | Current time value in milliseconds |
+| `time` | `number` | Current time value in milliseconds |
 | `scrollLeft` | `number` | Current horizontal scroll position |
-| `duration`   | `number` | Total duration in milliseconds     |
-
-
+| `duration` | `number` | Total duration in milliseconds |
 
 https://github.com/user-attachments/assets/3940cd0d-dd9d-4331-9172-592462ad65d3
 
@@ -164,10 +146,6 @@ Behavior
 - [x] Playhead maintains its relative position during horizontal scrolling
 - [x] Playhead is visible only when within the Timeline's visible area, using the `hidden` attribute when completely out of view
 
-
-
-
-
 ## Implementation Guidelines
 
 - Implement the required behaviors in the appropriate child components of the provided Timeline
@@ -175,6 +153,3 @@ Behavior
 - Consider performance implications, such as minimizing unnecessary re-renders
 - Pay attention to user experience and interface design
 - Write clean, well-documented, and maintainable code
-
-
-
