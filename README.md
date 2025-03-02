@@ -144,6 +144,19 @@ src/
 - Keyframe management
 - Responsive design
 
+
+### Branches
+
+- `main`: Default branch
+- `feature/number-input`: Implement number input component
+- `feature/playcontrols`: Implement play controls component
+- `feature/ruler`: Implement ruler component
+- `feature/track-list`: Implement track list component
+- `feature/keyframe-list`: Implement keyframe list component
+- `feature/playhead`: Implement playhead component
+- `feature/integration`: Implement integration tests
+- `feature/`: Implement new feature
+
 ## User Behavior Requirements
 
 ### 1. Number Input Field
