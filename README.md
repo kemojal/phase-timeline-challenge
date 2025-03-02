@@ -155,6 +155,7 @@ src/
 - `feature/keyframe-list`: Implement keyframe list component and its tests
 - `feature/playhead`: Implement playhead component and its tests
 - `feature/state-management`: Implement state management for the timeline
+- `feature/custom-hooks`: Implement custom hooks for timeline functionality`
 
 ## User Behavior Requirements
 
