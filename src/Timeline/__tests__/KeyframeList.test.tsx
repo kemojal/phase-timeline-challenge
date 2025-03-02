@@ -15,9 +15,22 @@ describe("KeyframeList Component", () => {
 
     render(
       <div>
-        <div ref={trackListRef} data-testid="track-list" style={{ overflow: "auto", height: "200px" }}></div>
-        <div ref={rulerRef} data-testid="ruler" style={{ overflowX: "auto", width: "500px" }}></div>
-        <KeyframeList duration={1000} keyframeListRef={keyframeListRef} rulerRef={rulerRef} trackListRef={trackListRef} />
+        <div
+          ref={trackListRef}
+          data-testid="track-list"
+          style={{ overflow: "auto", height: "200px" }}
+        ></div>
+        <div
+          ref={rulerRef}
+          data-testid="ruler"
+          style={{ overflowX: "auto", width: "500px" }}
+        ></div>
+        <KeyframeList
+          duration={1000}
+          keyframeListRef={keyframeListRef}
+          rulerRef={rulerRef}
+          trackListRef={trackListRef}
+        />
       </div>
     );
   });
@@ -50,7 +63,7 @@ describe("KeyframeList Component", () => {
 
     // Trigger scroll event on keyframeList
     fireEvent.scroll(keyframeList, { target: { scrollTop: 100 } });
-    
+
     // Check if trackList scrolled to match keyframeList
     expect(trackListScrollTop).toBe(100);
   });
@@ -63,20 +76,31 @@ describe("KeyframeList Component", () => {
 
     expect(ruler.scrollLeft).toBe(200);
   });
-
-
-  
-
 });
 
-
-
 describe("Segment Component", () => {
-    test("segment length visually represents duration (1ms = 1px)", () => {
-        render(<Segment duration={500} />);
-        const segment = screen.getByTestId("segment");
-    
-        expect(segment.firstChild).toHaveStyle("width: 500px");
-      });
+  test("segment length visually represents duration (1ms = 1px)", () => {
+    render(<Segment duration={500} />);
+    const segment = screen.getByTestId("segment");
+    const bar = segment.firstChild as HTMLElement;
 
+    expect(bar).toHaveStyle("width: 500px");
+  });
+
+  test("segment updates when duration prop changes", () => {
+    const { rerender } = render(<Segment duration={500} />);
+    const segment = screen.getByTestId("segment");
+    const bar = segment.firstChild as HTMLElement;
+
+    // Initial width
+    expect(bar).toHaveStyle("width: 500px");
+
+    // Update duration prop
+    rerender(<Segment duration={800} />);
+    expect(bar).toHaveStyle("width: 800px");
+
+    // Another update
+    rerender(<Segment duration={1000} />);
+    expect(bar).toHaveStyle("width: 1000px");
+  });
 });
