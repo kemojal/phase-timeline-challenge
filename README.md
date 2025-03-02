@@ -37,8 +37,9 @@ Implement interactive features for a Timeline component. We will provide a basic
 
 #### Behavior
 
-https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/01-input-test.gif
+![NumberInputField Behavior](https://github.com/kemojal/phase-timeline-challenge/blob/main/test-assets/01-input-test.gif)
 
+- [x] The input field displays the current value
 - [x] The displayed value updates immediately while typing, but `onChange` is not triggered until input is confirmed
 - [x] Clicking outside the input field removes focus and changes the value
 - [x] Clicking on the native step buttons immediately changes the value
