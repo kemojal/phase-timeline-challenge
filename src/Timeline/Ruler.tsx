@@ -56,20 +56,20 @@ const DurationKnob = ({
 
   return (
     <div
-      className="group absolute -top-1 -right-1.5 z-50 flex h-8 w-1 cursor-ew-resize flex-col items-center justify-center gap-[2px] rounded-xs bg-[#272525]/80 shadow-lg backdrop-blur-sm transition-all hover:bg-[#272525]/80 active:bg-[#272525]/80 touch-none"
+      className="group absolute -top-1 -right-1.5 z-50 flex h-8 w-[4px] cursor-ew-resize flex-col items-center justify-center gap-[2px] rounded-sm bg-red-500/90 shadow-lg backdrop-blur-sm transition-all hover:bg-red-500/100 active:bg-red-500/100  touch-none"
       onMouseDown={handleMouseDown}
       data-testid="duration-knob"
     >
       {/* Duration tooltip */}
-      <div className="absolute -top-5 px-1 py-0.5 text-[10px] text-white rounded shadow-xl opacity-0 transition-opacity bg-gray-900/90 group-hover:opacity-100 whitespace-nowrap">
+      <div className="absolute -top-5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 text-[10px] text-white rounded bg-[#272525] shadow-md opacity-0 transition-opacity group-hover:opacity-100 whitespace-nowrap select-none">
         {(duration / 1000).toFixed(1)}s
       </div>
 
       {/* Grip lines */}
-      <div className="flex flex-col gap-[2px]">
-        <div className="h-[1px] w-1.5 rounded-full bg-white/60 group-hover:bg-white/80" />
-        <div className="h-[1px] w-1.5 rounded-full bg-white/60 group-hover:bg-white/80" />
-        <div className="h-[1px] w-1.5 rounded-full bg-white/60 group-hover:bg-white/80" />
+      <div className="flex flex-col gap-[2px] py-1">
+        <div className="h-[1px] w-1.5 rounded-full bg-white/70 group-hover:bg-white" />
+        <div className="h-[1px] w-1.5 rounded-full bg-white/70 group-hover:bg-white" />
+        <div className="h-[1px] w-1.5 rounded-full bg-white/70 group-hover:bg-white" />
       </div>
 
       {/* Side indicators */}
