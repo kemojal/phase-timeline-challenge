@@ -144,7 +144,6 @@ src/
 - Keyframe management
 - Responsive design
 
-
 ### Branches
 
 - `main`: Default branch
@@ -154,8 +153,7 @@ src/
 - `feature/track-list`: Implement track list component and its tests
 - `feature/keyframe-list`: Implement keyframe list component and its tests
 - `feature/playhead`: Implement playhead component and its tests
-- `feature/integration`: Implement integration tests
-- `feature/`: Implement new feature
+- `feature/state-management`: Implement state management for the timeline`
 
 ## User Behavior Requirements
 
