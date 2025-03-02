@@ -24,7 +24,7 @@
   - [x] Extract scroll logic from Timeline
   - [x] Add proper TypeScript types
   - [x] Write tests
-- [ ] Implement `useTimeControl` hook
+- [x] Implement `useTimeControl` hook
   - [ ] Extract time/duration logic
   - [ ] Add validation and constraints
   - [ ] Write tests
